@@ -3,6 +3,7 @@ namespace Src\Services;
 require  '././vendor/autoload.php';
 use GuzzleHttp\Client;
 use Src\Entities\User;
+use Src\Services\MappingServices;
 use GuzzleHttp\Exception\ClientException;
 
 class AuthService {
@@ -30,6 +31,8 @@ class AuthService {
     public function loginHandler($response){
         if (intval($response->getStatusCode()) == 200 ) {
             $response = json_decode($response->getBody()->read(1024));
+            $refresh_token = $response->refresh_token;
+
             try {
                 $user = $this->Client->get('/api/user/me', ['headers' => $this->makeHeaders($response)]);
             } catch(ClientException $exeption) {
@@ -37,10 +40,13 @@ class AuthService {
             }
             
             if (intval($user->getStatusCode()) == 200) {
+                $map = new MappingServices();
                 $user = json_decode($user->getBody()->read(1024));
-                $user = new User($user->id , $user->email , $user->username , $user->roles , $response->token , $response->refresh_token );
+                $user = $map->map($user , User::class);
+                $user->setRefresh_token($refresh_token);
+                
                 if ($user instanceof User) {
-                    return $user;
+                   return $user;
                 }
             }else{
                $error = [
@@ -63,21 +69,27 @@ class AuthService {
         return $headers;
     }
 
+    public function makeHeadersUser(User $user){
+        $headers = ['Authorization' => 'Bearer ' . $user->getToken(), 'Accept' => 'application/json'];
+        return $headers;
+    }
+
     public function logOut(){
 
     }
 
     public function refresh($refresh_token){
         try {
-            $token = $this->Client->get('/api/user/refresh', ['json' => ['refresh_token' => $refresh_token]]);
+            $token = $this->Client->get('/api/token/refresh', ['json' => ['refresh_token' => $refresh_token]]);
         } catch (ClientException $exeption) {
             $token = $exeption->getResponse();
         }
-        if (intval($token->getStatusCode()) != 200) {
+
+        if (intval($token->getStatusCode()) != 200) 
             return false;
-        }
+        
         $token = json_decode($token->getBody()->read(1024));
-        return $token->refresh_token;
+        return $token ;
     }
 
     public function guard($user){

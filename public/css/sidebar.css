@@ -12,6 +12,15 @@
     border-radius: 20px;
 }
 
+.panel-image {
+    text-align: center;
+    display: flex;
+}
+
+.panel-image > img {
+    margin: auto;
+}
+
 .exploreSide{
    
     margin: 8% auto;
@@ -39,7 +48,8 @@
 
 .user-image {
 
-    width: 100%;
+    width: 90%;
+    height: auto;
     margin-top: 10px;
     border-radius: 50%;
 }

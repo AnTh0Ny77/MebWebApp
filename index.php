@@ -27,6 +27,10 @@ switch ($globalRequest){
     case '/MebWebApp/home':
         echo home::index();
         break;
+
+    case '/MebWebApp/logout':
+        echo index::logout();
+        break;
     
     default:
         header('HTTP/1.0 404 not found');

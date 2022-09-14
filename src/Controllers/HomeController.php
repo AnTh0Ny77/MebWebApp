@@ -6,18 +6,42 @@ require  '././vendor/autoload.php';
 use Src\Controllers\BaseController;
 use Src\Services\AuthService;
 use Src\Entities\User;
+use Src\Services\UserService;
 
 class HomeController extends BaseController
 {
 
     public static function index()
     {
-        $Security = new AuthService();
+        $userServices = new UserService();
         self::init();
         $alert = false;
 
-        if(!$Security->guard($_SESSION['user']))
-            header('location: login');
+        $user = $userServices->autoRefresh($_SESSION['user']);
+       
+        if (!$user instanceof User){
+            $_SESSION['alert'] = $user;
+            return IndexController::logout();
+        }
+            
+        $client = $userServices->getAdminData($user);
+       
+        $user->setClientInfiniteQr($client->clientInfiniteQr);
+        $user->setClientGames($client->clientGames);
+        if (empty($client->bagNumber)) {
+            $user->setBagNumber(14);
+        }else{
+            $user->setBagNumber($client->bagNumber);
+        }
+
+        if (empty($client->exploreCoin)) {
+            $user->setExploreCoin(450);
+        }else{
+            $user->setExploreCoin($client->exploreCoin);
+        }
+        
+       
+        $_SESSION['user'] = $user;
 
         return self::$twig->render(
             'home.html.twig',

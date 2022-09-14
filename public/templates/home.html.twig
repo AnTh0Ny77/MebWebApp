@@ -4,11 +4,34 @@
 
 {% endblock %}
 {% block main %}
-{% include "elements/navbar.html.twig" %}
+{# {% include "elements/navbar.html.twig" %} #}
 {% include "elements/sidebar.html.twig" %}
-<main class=" d-flex">
-  
-  
+<main class=" flex-wrap  d-flex wrapper-home justify-content-between">
+  <div class="explorecard">
+    <div class="left-explorecard">
+        <div class="title-explorecard"> Explore Coin</div>
+        <div class="subtitle-explorecard">Solde disponible</div>
+        <div class="data-explorecard"><span class="explore-coin"></span>{{user.explorecoin}} EXC</div>
+       
+    </div>
+    <div class="button-explore-card">recharger</div>
+  </div>
+  <div class="explorecard">
+    <div class="left-explorecard">
+        <div class="title-explorecard"> Explore Bag</div>
+        <div class="subtitle-explorecard">Flotte disponible</div>
+        <div class="data-explorecard">{{user.bagNumber}} sacs à dos</div>
+    </div>
+    <div class="explorebag">
+
+    </div>
+  </div>
+  <div class="explorecard">
+    les Jeux
+  </div>
+  <div class="explorecard">
+    Le rang
+  </div>
 </main>
 {% endblock %}
 {% block script %}

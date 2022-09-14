@@ -10,7 +10,7 @@
     <form method="POST" action="login">
         {% if alert %}
         <div class="alert alert-warning my-3" role="alert">
-            Identifiants invalides !
+            {{alert['message']}}
         </div>
         {% endif %}
         <div class="form-floating my-4 ">

@@ -13,6 +13,8 @@ Class IndexController extends BaseController
         self::init();
         $alert = false ;
 
+        
+
         if (!empty($_POST['username']) && !empty($_POST['password'])) 
             $user =  $Security->login($_POST['username'] , $_POST['password'] );
         
@@ -25,6 +27,10 @@ Class IndexController extends BaseController
         if (isset($_SESSION['user']) and $_SESSION['user'] instanceof User) 
             return header('location: home');
 
+        if (!empty($_SESSION['alert'])) {
+                $alert['message'] =  $_SESSION['alert']['message'];
+                $_SESSION['alert'] = '';
+        }
         
         return self::$twig->render(
             'login.html.twig',[
@@ -33,6 +39,13 @@ Class IndexController extends BaseController
         );
         
     }
+
+    public static function logout(){
+
+        $_SESSION['user'] = '';
+        return header('location: login');
+    }
+
 
     public static function error404(){
         self::init();

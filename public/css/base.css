@@ -18,3 +18,95 @@ line-height: 14px;
 text-align: center;
 color: #8A8A8A;
 }
+
+.explorecard{
+    background: #FFFFFF;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.16);
+    border-radius: 10px;
+    min-width: 350px;
+    min-height: 197px;
+    margin-top: 45px;
+}
+
+.wrapper-home{
+    width: 70%;
+    margin-left: auto; 
+    margin-right: 0;
+    padding-right: 5%;
+}
+
+.background-myeb{
+    background: #F2F2F2;
+}
+
+.explorebag{
+    float: right;
+    margin-right: -15%;
+    background: url('../images/explorebag.png');
+    width: 126px;
+    height: 167px;
+    filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.16));
+}
+
+.explore-coin{
+    background: url('../images/exploreCoin.svg');
+    width: 63px;
+    height: 63px;
+    margin-right: 10px;
+    filter: drop-shadow(4px 4px 8px rgba(0, 0, 0, 0.16));
+}
+
+.left-explorecard{
+    float: left;
+    width: 70%;
+}
+
+.title-explorecard{
+    font-family: 'Roboto';
+    font-style: normal;
+    margin-left: 3%;
+    margin-top: 3%;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 21px;
+    color: #3F3F3F;
+}
+
+.subtitle-explorecard{
+    font-family: 'Roboto';
+    margin-left: 3%;
+    margin-top: 2px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+    color: #8A8A8A;
+
+}
+
+.data-explorecard{
+    margin-top: 5%;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 47px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #074A36;
+}
+
+.button-explore-card{
+    position: realtive;
+    margin-right: 15px;
+    margin-bottom: 0px;
+    width:115px;
+    height: 33px;
+    color: #F2F2F2;
+    text-align: center;
+    cursor: pointer;
+    float: right;
+    background: #074A36;
+    border-radius: 5px;
+}
