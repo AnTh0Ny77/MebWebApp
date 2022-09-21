@@ -8,12 +8,10 @@ use Src\Services\AuthService;
 use Src\Entities\User;
 use Src\Services\UserService;
 
-class HomeController extends BaseController
-{
+class QrController extends BaseController{
 
-   
     public static function path(){
-        return 'home';
+        return 'qr';
     }
 
     public static function index()
@@ -28,7 +26,7 @@ class HomeController extends BaseController
             $_SESSION['alert'] = $user;
             return IndexController::logout();
         }
-            
+
         $client = $userServices->getAdminData($user);
        
         $user->setClientInfiniteQr($client->clientInfiniteQr);
@@ -49,7 +47,7 @@ class HomeController extends BaseController
         $_SESSION['user'] = $user;
 
         return self::$twig->render(
-            'home.html.twig',
+            'qr.html.twig',
             [
                 'alert' => $alert,
                 'path' => self::path(),
@@ -58,8 +56,4 @@ class HomeController extends BaseController
         );
     }
 
-    public static function error404()
-    {
-        self::init();
-    }
 }

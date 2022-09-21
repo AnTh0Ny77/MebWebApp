@@ -97,9 +97,24 @@ color: #8A8A8A;
     color: #074A36;
 }
 
+
+.data-explorecard-red{
+    margin-top: 5%;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 47px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #DF1317;
+}
+
 .button-explore-card{
     position: realtive;
     margin-right: 15px;
+    margin-top: 27px;
     margin-bottom: 0px;
     width:115px;
     height: 33px;
@@ -110,3 +125,4 @@ color: #8A8A8A;
     background: #074A36;
     border-radius: 5px;
 }
+

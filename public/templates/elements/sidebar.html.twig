@@ -9,29 +9,27 @@
     <div class="username">
         <h2 class="h2-myeb">{{user.getUsername()}}</h2>
     </div>
-    <div class="qr-link">
-        <a href="" class="link-qr"></a>
+    <div class="qr-link" id="qrLink">
+        <a href="qr" class="link-qr"></a>
     </div>
     <div class="info-myeb">
         Générer un QRJeu
     </div>
     <div class="d-flex flex-column mt-4  wrapper-link">
-        <div class="mt-5  d-flex justify-content-start picto-actif">
-            <i class="fas fa-eye fa-lg"></i>
-            <a href="" class="side-link-actif mx-4">Vue d'ensemble</a>
-        
+        <div class="mt-2  d-flex justify-content-start picto-actif">
+            {% if path == 'home' %}
+                <a href="home" class="side-link-actif mx-4"><i class="fas fa-eye"></i> Vue d'ensemble</a>
+            {% else %}
+                <a href="home" class="side-link mx-4"><i class="fas fa-eye"></i> Vue d'ensemble</a>   
+            {% endif %}
+            
         </div>
-        <div class="mt-4 d-flex justify-content-start picto-inactif">
-            <i class="fas fa-users fa-lg"></i>
-            <a href="" class="side-link mx-4">Communauté / jeux</a>
-        
+        <div class="mt-3 d-flex justify-content-start picto-inactif">
+            <a href="" class="side-link mx-4">  <i class="fas fa-users "></i> Communauté/jeux</a>
         </div>
-        <div class="mt-4 d-flex justify-content-start picto-inactif">
-            <i class="fas fa-user-robot fa-lg"></i>
-            <a href="logout" class="side-link mx-4">Se deconnecter</a>
-        
+        <div class="mt-3 d-flex justify-content-start picto-inactif">
+            <a href="logout" class="side-link mx-4">  <i class="fas fa-user-robot "></i>Se deconnecter</a>
         </div>
-
     </div>
     
 </div>

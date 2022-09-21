@@ -27,10 +27,18 @@
     </div>
   </div>
   <div class="explorecard">
-    les Jeux
+    <div class="title-explorecard"> Jeux disponibles </div>
+    <div class="subtitle-explorecard">Jeux en gestion</div>
+    <div class="data-explorecard-red">{{user.clientGames|length}} 
+    {% if user.clientGames|length > 1 %}
+      jeux
+    {% else %}
+      jeu
+    {% endif %}</div>
   </div>
   <div class="explorecard">
-    Le rang
+    <div class="title-explorecard"> Rang {{user.rank.name}} </div>
+   
   </div>
 </main>
 {% endblock %}

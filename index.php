@@ -2,6 +2,7 @@
 require "vendor/autoload.php";
 use Src\Controllers\IndexController as index;
 use Src\Controllers\HomeController as home;
+use Src\Controllers\QrController as qr;
 session_start();
 $request = $_SERVER['REQUEST_URI'];
 $getRequest = explode('?' ,$request, 2);
@@ -26,6 +27,10 @@ switch ($globalRequest){
 
     case '/MebWebApp/home':
         echo home::index();
+        break;
+
+    case '/MebWebApp/qr':
+        echo qr::index();
         break;
 
     case '/MebWebApp/logout':

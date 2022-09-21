@@ -15,12 +15,14 @@ class AuthService {
         $this->Config = file_get_contents('globalConfig.json');
         $this->Config = json_decode($this->Config);
         $this->Client =  new Client(['base_uri' => $this->Config->AuthService->url ,'curl' => array(CURLOPT_SSL_VERIFYPEER => false)]);
+       
     }
 
     public function logIn($username , $password){
         try {
             $response = $this->Client->post('/api/login',  ['json' => ['username' => $username, 'password' => $password]]);
         } catch (ClientException $exeption) {
+           
             $response = $exeption->getResponse();
         }
         
