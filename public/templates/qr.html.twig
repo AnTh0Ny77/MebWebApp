@@ -5,11 +5,84 @@
 {% endblock %}
 {% block main %}
 {% include "elements/sidebar.html.twig" %}
-<main class=" flex-wrap  d-flex wrapper-home justify-content-between">
-    Qr code c'est ici !
-</main>
+<form action="qr" method="post">
+    <main class=" flex-wrap  d-flex wrapper-home justify-content-between">
+        <div class="wrapper-left">
+            <div class="left-invisible-explorecard">
+                <div class="title-explorecard"> Jeux</div>
+                <div class="subtitle-explorecard">Selectionez un jeu</div>
+                <div class="form-row-myeb">
+                    <select class="input-myeb" name="game" id="select-games" required>
+                        <option value="3">Menton riviera et merveilles</option>
+                    </select>
+                </div> 
+            </div>
+            <div class="left-invisible-explorecard">
+                <div class="title-explorecard"> Durée</div>
+                <div class="subtitle-explorecard">Selectionez la durée du jeux</div>
+                <div class="form-row-myeb">
+                    <select class="input-myeb" name="time" id="select-durée" required>
+                        <option value="0.5">1/2 journée</option>
+                        <option value="1">1 journée</option>
+                        <option value="1.5">1 journée et demi</option>
+                        <option value="2">2 jours</option>
+                        <option value="2.5">2 journées et demi</option>
+                        <option value="3">3 jours</option>
+                        <option value="3.5">3 journées et demi</option>
+                        <option value="4">4 jours</option>
+                    </select>
+                </div> 
+            </div>
+            <div class="left-invisible-explorecard">
+                <div class="title-explorecard">Cout en EXC</div>
+                <div class="subtitle-explorecard">Vous disposez d'un accès ilimité a ce jeux</div>
+            </div>
+            <div class="left-invisible-explorecard">
+                <button class="btn-explore-validation marg-3">Valider</button>
+            </div>
+        </div>
+        <div class="wrapper-right">
+            <div class="explore-visio">
+                <div class="invisible-explorecard">
+                    <div class="title-explorecard">QR code</div>
+                    <div class="subtitle-explorecard">Imprimable ou scannable directement sur l'écran</div>
+                </div>
+                {% if qr  %}
+                    <div class="image-qrcode">
+                        <img id="qrImage" src="data:image/png;base64,{{qr}}" alt="qrcode" class="img-qr">
+                    </div>
+                    
+                {% else %}
+                <div class="image-qrcode">
+                    <div class="subtitle-explorecard-white">Validez pour générer votre qr code </div>
+                </div>
+                {% endif %}
+               
+                <div class="footer-viso">
+                    <button class="btn-explore-yellow" type="button" id="printButton">Imprimer</button>
+                    <a class="btn-explore-yellow" download="qrcode.png" href="data:image/png;base64,{{qr}}" title="Télécharger">Télécharger</a>
+                </div>
+            </div>
+    
+        </div>     
+    </main>
+
+</form>
+
 
 {% endblock %}
+
 {% block script %}
+<script type="text/javascript">
+    let button = document.getElementById('printButton');
+    button.addEventListener('click' , function(){
+            var image = document.getElementById('qrImage');
+            var win = window.open('', '', 'height=700,width=700');
+            win.document.write(image.outerHTML);
+            win.document.close();
+            win.print();
+
+    })
+</script>
 
 {% endblock %}

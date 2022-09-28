@@ -7,6 +7,7 @@ use Src\Controllers\BaseController;
 use Src\Services\AuthService;
 use Src\Entities\User;
 use Src\Services\UserService;
+use Src\Services\QrService;
 
 class QrController extends BaseController{
 
@@ -19,8 +20,21 @@ class QrController extends BaseController{
         $userServices = new UserService();
         self::init();
         $alert = false;
+        $qr = false ;
 
         $user = $userServices->autoRefresh($_SESSION['user']);
+
+        if (!empty($_POST['game']) && !empty($_POST['time'])) {
+           $qrService = new QrService();
+           $qr = $qrService->getQr($user , $_POST['game']);
+             
+
+        if (intval($qr->getStatusCode()) != 200){
+            $alert = ["message" => "impossible de generer le qrcode"];
+            $qr = false ;
+        }else { $qr = base64_encode($qr->getBody()->read(16384)); }
+              
+        }
         
         if (!$user instanceof User){
             $_SESSION['alert'] = $user;
@@ -42,6 +56,8 @@ class QrController extends BaseController{
         }else{
             $user->setExploreCoin($client->exploreCoin);
         }
+
+
         
        
         $_SESSION['user'] = $user;
@@ -51,7 +67,8 @@ class QrController extends BaseController{
             [
                 'alert' => $alert,
                 'path' => self::path(),
-                'user' => $_SESSION['user']
+                'user' => $_SESSION['user'], 
+                'qr' => $qr
             ]
         );
     }
