@@ -28,6 +28,11 @@ class HomeController extends BaseController
             $_SESSION['alert'] = $user;
             return IndexController::logout();
         }
+
+        if (isset($_SESSION['alert'])) {
+            $alert = $_SESSION['alert'];
+            $_SESSION['alert'] = "";
+        }
             
         $client = $userServices->getAdminData($user);
        

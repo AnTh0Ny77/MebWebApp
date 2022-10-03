@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block style %}
 <link rel="stylesheet" href="public/css/sidebar.css">
-
 {% endblock %}
 {% block main %}
 {% include "elements/sidebar.html.twig" %}
@@ -13,7 +12,9 @@
                 <div class="subtitle-explorecard">Selectionez un jeu</div>
                 <div class="form-row-myeb">
                     <select class="input-myeb" name="game" id="select-games" required>
-                        <option value="3">Menton riviera et merveilles</option>
+                        {% for game in user.getClientGames()%}
+                            <option value="{{game.Game.id}}">{{game.Game.name}}</option>
+                        {% endfor %}
                     </select>
                 </div> 
             </div>
@@ -22,14 +23,14 @@
                 <div class="subtitle-explorecard">Selectionez la durée du jeux</div>
                 <div class="form-row-myeb">
                     <select class="input-myeb" name="time" id="select-durée" required>
-                        <option value="0.5">1/2 journée</option>
-                        <option value="1">1 journée</option>
-                        <option value="1.5">1 journée et demi</option>
-                        <option value="2">2 jours</option>
-                        <option value="2.5">2 journées et demi</option>
-                        <option value="3">3 jours</option>
-                        <option value="3.5">3 journées et demi</option>
-                        <option value="4">4 jours</option>
+                        <option value="12">1/2 journée</option>
+                        <option value="24">1 journée</option>
+                        <option value="36">1 journée et demi</option>
+                        <option value="48">2 jours</option>
+                        <option value="60">2 journées et demi</option>
+                        <option value="72">3 jours</option>
+                        <option value="84">3 journées et demi</option>
+                        <option value="96">4 jours</option>
                     </select>
                 </div> 
             </div>
@@ -66,10 +67,7 @@
     
         </div>     
     </main>
-
 </form>
-
-
 {% endblock %}
 
 {% block script %}

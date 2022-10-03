@@ -4,6 +4,7 @@ namespace Src\Controllers;
 require  '././vendor/autoload.php';
 
 use Src\Controllers\BaseController;
+use Src\Controllers\HomeController;
 use Src\Services\AuthService;
 use Src\Entities\User;
 use Src\Services\UserService;
@@ -42,9 +43,15 @@ class QrController extends BaseController{
         }
 
         $client = $userServices->getAdminData($user);
+
+        if (empty($client->clientGames)) {
+            $_SESSION['alert'] = ['message' => 'Aucun jeux disponible , contactez myExplorebag'];
+            return HomeController::index();
+        }
        
         $user->setClientInfiniteQr($client->clientInfiniteQr);
         $user->setClientGames($client->clientGames);
+       
         if (empty($client->bagNumber)) {
             $user->setBagNumber(14);
         }else{
