@@ -40,6 +40,8 @@ class User{
 
     private $exploreCoin;
 
+    private $stats;
+
     public function getId(){
         return $this->id;
     }
@@ -336,6 +338,24 @@ class User{
     public function setExploreCoin($exploreCoin)
     {
         $this->exploreCoin = $exploreCoin;
+
+        return $this;
+    }
+
+    
+    public function getStats()
+    {
+        return $this->stats;
+    }
+
+    /**
+     * Set the value of stats
+     *
+     * @return  self
+     */ 
+    public function setStats($stats)
+    {
+        $this->stats = $stats;
 
         return $this;
     }

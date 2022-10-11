@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% block style %}
+<link rel="stylesheet" href="public/css/sidebar.css">
+{% endblock %}
+{% block main %}
+{% include "elements/sidebar.html.twig" %}
+<form action="exc" method="post" >
+    <main class=" flex-wrap  d-flex wrapper-home justify-content-start">
+            <div class="left-invisible-explorecard my-3">
+                <div class="d-flex flex-column my-4">
+                    <div class="subtitle-explorecard">Montant en euro</div>
+                    <select name="amount" class="input-myeb">
+                        <option value="5000">50</option>
+                        <option value="10000">100</option>
+                        <option value="15000">150</option>
+                        <option value="20000">200</option>
+                        <option value="25000">250</option>
+                        <option value="30000">300</option>
+                        <option value="35000">350</option>
+                        <option value="40000">400</option>
+                        <option value="45000">450</option>
+                        <option value="50000">500</option>
+                        <option value="55000">550</option>
+                        <option value="60000">600</option>
+                    </select>
+                </div> 
+                <button class="btn-explore-yellow-large marg-3 px-3">Valider</button>
+            </div>
+    </main>
+    
+
+</form>
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}

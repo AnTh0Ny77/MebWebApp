@@ -167,6 +167,20 @@ color: #8A8A8A;
     color: rgba(138, 138, 138, 0.5);
 }
 
+.form-control{
+    color: rgba(138, 138, 138, 0.5) !important;
+    margin-left: 3% !important;
+    background: #FFFFFF !important;
+    border: 1px solid rgba(138, 138, 138, 0.69) !important;
+    border-radius: 7px !important;
+    font-family: 'Roboto' !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    font-size: 14px !important;
+    cursor: pointer !important;
+    line-height: 16px !important;
+}
+
 .label-myeb{
     font-family: 'Roboto';
     font-style: normal;
@@ -221,6 +235,34 @@ color: #8A8A8A;
     border: none;
     cursor: pointer;
     background: #FABC43;
+    border-radius: 5px;
+}
+
+.btn-explore-yellow-large{
+    text-decoration: none;
+    height: 33px;
+    color: #F2F2F2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    cursor: pointer;
+    background: #074A36;
+    border-radius: 5px;
+}
+
+.btn-explore-yellow-large:hover{
+    text-decoration: none;
+    height: 33px;
+    color: #F2F2F2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    background: #074A36;
     border-radius: 5px;
 }
 

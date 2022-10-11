@@ -43,6 +43,7 @@ class QrController extends BaseController{
         }
 
         $client = $userServices->getAdminData($user);
+        
 
         if (empty($client->clientGames)) {
             $_SESSION['alert'] = ['message' => 'Aucun jeux disponible , contactez myExplorebag'];

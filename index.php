@@ -3,6 +3,7 @@ require "vendor/autoload.php";
 use Src\Controllers\IndexController as index;
 use Src\Controllers\HomeController as home;
 use Src\Controllers\QrController as qr;
+use Src\Controllers\PaymentController as pay;
 session_start();
 $request = $_SERVER['REQUEST_URI'];
 $getRequest = explode('?' ,$request, 2);
@@ -31,6 +32,14 @@ switch ($globalRequest){
 
     case '/MebWebApp/qr':
         echo qr::index();
+        break;
+
+    case '/MebWebApp/exc'.$getData:
+        echo pay::index();
+        break;
+
+    case '/MebWebApp/amount':
+        echo pay::amount();
         break;
 
     case '/MebWebApp/logout':

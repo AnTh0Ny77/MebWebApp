@@ -33,11 +33,30 @@ class HomeController extends BaseController
             $alert = $_SESSION['alert'];
             $_SESSION['alert'] = "";
         }
-            
+
+        //traitement du payment stripe :
+        if (!empty($_GET['valid']) and isset($_SESSION['payment'])) {
+                if (!empty($_SESSION['payment']['amount']) and  !empty($_SESSION['payment']['secret'])) {
+                    //requete de payement
+                    $alert = [ 
+                        "message" => "Bravo ! ".intval($_SESSION['payment']['amount']/100)." exploreCoins ont étés ajoutés a votre compte"
+                    ];
+                }
+                $_SESSION['payment'] = "";
+        }
+        
         $client = $userServices->getAdminData($user);
-       
+
         $user->setClientInfiniteQr($client->clientInfiniteQr);
+
         $user->setClientGames($client->clientGames);
+        
+        $user->setStats($client->stat);
+
+        $stats = $userServices->handleStats($user);
+
+        $user->setStats($stats);
+
         if (empty($client->bagNumber)) {
             $user->setBagNumber(14);
         }else{
