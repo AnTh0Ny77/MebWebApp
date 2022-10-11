@@ -7,7 +7,6 @@
 <form action="" method="post" id="StripeForm">
     <main class=" flex-wrap  d-flex wrapper-home justify-content-start">
         <div id="errors"></div>
-        
             <div class="left-invisible-explorecard my-3">
                 <div class="d-flex flex-column my-4">
                     <div class="subtitle-explorecard">Titulaire de la carte</div>
@@ -21,12 +20,8 @@
                 <button class="btn-explore-yellow-large marg-3 mt-4 px-3" id="valid" data-secret="{{output['clientSecret']}}" type="button">Valider le paiement</button>
             </div>
     </main>
-    
-
 </form>
-
 {% endblock %}
-
 {% block script %}
 <script src="https://js.stripe.com/v3/"></script>
 <script src="public/js/checkout.js" defer></script>
