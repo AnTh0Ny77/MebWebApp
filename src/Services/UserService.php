@@ -39,6 +39,21 @@ class UserService {
         return $user;
     }
 
+    public function getRankCover($user){
+        $authService = new AuthService();
+       
+        if (!$user instanceof User)
+            return $this->returnError( 'Reconnexion requise');
+
+        try {
+            $user = $this->Client->get('/api/rank/'.$user->getRank()->id.'/cover', ['headers' => $authService->makeHeadersUser($user)]);
+        } catch(ClientException $exeption) {$user = $exeption->getResponse();}
+        
+        $response = $user->getBody()->read(32768);
+        
+        return $response;
+    }
+
     public function getAdminData($user){
        
         $mappingService = new MappingServices();

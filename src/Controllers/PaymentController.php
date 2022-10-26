@@ -57,6 +57,7 @@ class PaymentController extends BaseController{
             'payment.html.twig',
             [
                 'alert' => $alert,
+                'amount' => $_POST['amount'] ,
                 'path' => self::path(),
                 'user' => $_SESSION['user'], 
                 'output' => $output

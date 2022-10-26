@@ -42,6 +42,8 @@ class User{
 
     private $stats;
 
+    private $transac;
+
     public function getId(){
         return $this->id;
     }
@@ -356,6 +358,26 @@ class User{
     public function setStats($stats)
     {
         $this->stats = $stats;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of transac
+     */ 
+    public function getTransac()
+    {
+        return $this->transac;
+    }
+
+    /**
+     * Set the value of transac
+     *
+     * @return  self
+     */ 
+    public function setTransac($transac)
+    {
+        $this->transac = $transac;
 
         return $this;
     }

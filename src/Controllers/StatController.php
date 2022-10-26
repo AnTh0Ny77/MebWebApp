@@ -9,12 +9,12 @@ use Src\Services\PayService;
 use Src\Entities\User;
 use Src\Services\UserService;
 
-class HomeController extends BaseController
+class StatController extends BaseController
 {
 
    
     public static function path(){
-        return 'home';
+        return 'stat';
     }
 
     public static function index()
@@ -35,19 +35,6 @@ class HomeController extends BaseController
             $alert = $_SESSION['alert'];
             $_SESSION['alert'] = "";
         }
-
-        //traitement du payment stripe :
-        if (!empty($_GET['valid']) and isset($_SESSION['payment'])) {
-                if (!empty($_SESSION['payment']['amount']) and  !empty($_SESSION['payment']['secret'])) {
-                    $pay = new PayService();
-                    $pay->PostTransac($user , $_SESSION['payment']['amount']);
-                    $alert = [ 
-                        "message" => "Bravo ! ".intval($_SESSION['payment']['amount']/100)." exploreCoins ont étés ajoutés a votre compte"
-                    ];
-                }
-                $_SESSION['payment'] = "";
-        }
-        
 
         $client = $userServices->getAdminData($user);
 
@@ -85,7 +72,7 @@ class HomeController extends BaseController
         $_SESSION['user'] = $user;
 
         return self::$twig->render(
-            'home.html.twig',
+            'stat.html.twig',
             [
                 'alert' => $alert,
                 'cover_rank' => $cover_rank ,

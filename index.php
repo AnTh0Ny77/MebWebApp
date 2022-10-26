@@ -4,6 +4,7 @@ use Src\Controllers\IndexController as index;
 use Src\Controllers\HomeController as home;
 use Src\Controllers\QrController as qr;
 use Src\Controllers\PaymentController as pay;
+use Src\Controllers\StatController as stat;
 session_start();
 $request = $_SERVER['REQUEST_URI'];
 $getRequest = explode('?' ,$request, 2);
@@ -40,6 +41,10 @@ switch ($globalRequest){
 
     case '/MebWebApp/amount':
         echo pay::amount();
+        break;
+    
+    case '/MebWebApp/stat':
+        echo stat::index();
         break;
 
     case '/MebWebApp/logout':

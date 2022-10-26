@@ -5,7 +5,7 @@
 {% endblock %}
 {% block main %}
 {# {% include "elements/navbar.html.twig" %} #}
-{% include "elements/sidebar.html.twig" %}
+
 {% if alert %}
 <div class="alert-center alert alert-warning alert-dismissible fade show" role="alert">
     {{alert['message']}}
@@ -14,13 +14,12 @@
 </div>
 {% endif %}
 <main class=" flex-wrap  d-flex wrapper-home justify-content-between">
- 
+  {% include "elements/sidebar.html.twig" %}
   <div class="explorecard">
     <div class="left-explorecard">
         <div class="title-explorecard"> Explore Coin</div>
         <div class="subtitle-explorecard">Solde disponible</div>
         <div class="data-explorecard"><span class="explore-coin"></span>{{user.explorecoin}} EXC</div>
-       
     </div>
     <a href="amount" class="button-explore-card">recharger</a>
   </div>
@@ -43,13 +42,24 @@
     {% else %}
       jeu
     {% endif %}</div>
+    <div  class="info-bas-explore-card">
+      
+     {% for game in user.clientGames %}
+        {{game.Game.name}}
+     {% endfor %}
+    </div>
   </div>
   <div class="explorecard">
-    <div class="title-explorecard"> Rang {{user.rank.name}} </div>
-   
+    <div class="left-explorecard">
+      <div class="title-explorecard"> Rang {{user.rank.name}} </div>
+      <div class="subtitle-explorecard">Améliorez votre rang</div>
+      <div class="data-explorecard">{{rank_games}} Jeux débloqués</div>
+  </div>
+    <div class="svg-container">
+      {{ cover_rank | raw }}
+    </div>
   </div>
 </main>
 {% endblock %}
 {% block script %}
-
 {% endblock %}
