@@ -17,28 +17,39 @@
 </div>
 {% endif %}
 <main class=" flex-wrap  d-flex wrapper-home justify-content-between">
-  <div class="explorecard-transparent">
-    <div class="title-explorecard"> Historique des transactions </div>
-    <div class="subtitle-explorecard">Rechargement en ExploreCoins</div>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">ID transaction</th>
-          <th scope="col">Montant</th>
-          <th scope="col">Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for entry in user.transac %}
+  {% if user.clientInfiniteQr == 0  %}
+    {% if user.transac %}
+    <div class="explorecard-transparent">
+      <div class="title-explorecard"> Historique des transactions </div>
+      <div class="subtitle-explorecard">Rechargement en ExploreCoins</div>
+      <table class="table table-striped">
+        <thead>
           <tr>
-            <td>{{entry.id}}</td>
-            <td>{{entry.amount}}  €</td>
-            <td>{{entry.createdAt}}</td>
+            <th scope="col">ID transaction</th>
+            <th scope="col">Montant</th>
+            <th scope="col">Date</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+        </thead>
+        <tbody>
+          {% for entry in user.transac %}
+            <tr>
+              <td>{{entry.id}}</td>
+              <td>{{entry.amount}}  €</td>
+              <td>{{entry.createdAt}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="explorecard-transparent">
+      <div class="title-explorecard"> Historique des transactions </div>
+      <div class="subtitle-explorecard">Vous n'avez pas encore rechargé vos explore coin </div>
+      
+    </div>
+    {% endif %}
+  
+  {% endif %}
   <div class="explorecard-transparent">
     <div class="title-explorecard">Statistiques</div>
     <div class="subtitle-explorecard">Qrcodes</div>

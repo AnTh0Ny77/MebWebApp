@@ -6,7 +6,7 @@
 {% block main %}
 
 
-<main class="  d-flex align-items-center justify-content-center form-signin w-100 m-auto  text-center">
+<main class=" login-container  d-flex align-items-center justify-content-center form-signin w-100 m-auto  text-center">
     <form method="POST" action="login">
         {% if alert %}
         <div class="alert alert-warning my-3" role="alert">
@@ -14,15 +14,16 @@
         </div>
         {% endif %}
         <div class="form-floating my-4 ">
-                <input type="text" class="form-control" name="username" value="{{alert['username']}}" placeholder="lexitjwtSecurity45">
-            <label for="floatingInput">Username</label>
+                <div class="subtitle-explorecard">Nom d' utilisateur</div>
+                <input type="text" class="input-myeb" name="username" value="{{alert['username']}}" placeholder="">
+            
         </div>
         <div class="form-floating my-4">
-            <input type="password" class="form-control" value="{{alert['password']}}" name="password"  placeholder="Password">
-            <label for="floatingPassword">Password</label>
+            <div class="subtitle-explorecard">Mot de passe</div>
+            <input type="password" class="input-myeb" value="{{alert['password']}}" name="password"  placeholder="">
         </div>
 
-        <button class=" btn btn-lg btn-primary mx-auto" type="submit">se connecter</button>
+        <button class=" button-login mx-auto" type="submit">se connecter</button>
     </form>
 </main>
 {% endblock %}

@@ -23,7 +23,7 @@ public function getQr( $user , $game__id){
         $user = $this->Client->post('/api/qr/create', ['headers' => $this->AuthService->makeHeadersUser($user) , 'json' => ['game' => $game__id]]);
     } catch(ClientException $exeption) {$user = $exeption->getResponse();}
 
-    return$user;
+    return $user;
   
 }
 

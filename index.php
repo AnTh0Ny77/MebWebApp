@@ -5,6 +5,10 @@ use Src\Controllers\HomeController as home;
 use Src\Controllers\QrController as qr;
 use Src\Controllers\PaymentController as pay;
 use Src\Controllers\StatController as stat;
+use Src\Controllers\PasswordChangeController as pass;
+use Src\Controllers\UserController as user;
+use Src\Controllers\UserFormsController as forms;
+
 session_start();
 $request = $_SERVER['REQUEST_URI'];
 $getRequest = explode('?' ,$request, 2);
@@ -49,6 +53,18 @@ switch ($globalRequest){
 
     case '/MebWebApp/logout':
         echo index::logout();
+        break;
+
+    case '/MebWebApp/pass':
+        echo pass::index();
+        break;
+
+    case '/MebWebApp/user':
+        echo user::index();
+        break;
+
+    case '/MebWebApp/formsUser'.$getData:
+        echo forms::index();
         break;
     
     default:

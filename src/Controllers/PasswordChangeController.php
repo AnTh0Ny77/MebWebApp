@@ -4,62 +4,40 @@ namespace Src\Controllers;
 require  '././vendor/autoload.php';
 
 use Src\Controllers\BaseController;
-use Src\Controllers\HomeController;
 use Src\Services\AuthService;
+use Src\Services\PayService;
 use Src\Entities\User;
 use Src\Services\UserService;
-use Src\Services\QrService;
 
-class QrController extends BaseController{
+class PasswordChangeController extends BaseController
+{
 
     public static function path(){
-        return 'qr';
+        return 'pass';
     }
 
-    public static function index(){
+    public static function index()
+    {
         $userServices = new UserService();
         self::init();
         $alert = false;
-        $qr = false ;
-
         $user = $userServices->autoRefresh($_SESSION['user']);
-
-        if (!empty($_POST['game']) && !empty($_POST['time'])) {
-           $qrService = new QrService();
-           $qr = $qrService->getQr($user , $_POST['game']);
-             
-
-        if (intval($qr->getStatusCode()) != 200){
-            if (intval($qr->getStatusCode()) == 407) {
-                $alert = ["message" => "Le jeu n est pas disponible pour votre compte"];
-            }elseif (intval($qr->getStatusCode()) == 408) {
-                $alert = ["message" => "Solde en exploreCoin insuffisant"];
-            }else{
-                $alert = ["message" => "impossible de generer le qrcode"];
-            }
-            $qr = false ;
-        }else { $qr = base64_encode($qr->getBody()->read(16384)); }
-              
-        }
         
         if (!$user instanceof User){
             $_SESSION['alert'] = $user;
             return IndexController::logout();
         }
 
-        $client = $userServices->getAdminData($user);
-        
-
-        if (empty($client->clientGames)) {
-            $_SESSION['alert'] = ['message' => 'Aucun jeux disponible , contactez myExplorebag'];
-            return HomeController::index();
+        if (isset($_SESSION['alert'])) {
+            $alert = $_SESSION['alert'];
+            $_SESSION['alert'] = "";
         }
-       
+
+        $client = $userServices->getAdminData($user);
         $user->setClientInfiniteQr($client->clientInfiniteQr);
         $user->setClientGames($client->clientGames);
-       
         if (empty($client->bagNumber)) {
-            $user->setBagNumber(0);
+            $user->setBagNumber(14);
         }else{
             $user->setBagNumber($client->bagNumber);
         }
@@ -78,19 +56,38 @@ class QrController extends BaseController{
         }else {
             $cover = null;
         }
+
+        //traitement du changement de mot de passe  :
+        if (!empty($_POST['actual_password']) and !empty($_POST['password'])) {
+            $body = [
+                "password" => $_POST['password'] , 
+                "actual_password" => $_POST['actual_password']
+            ];
+            $responsePassword = $userServices->updatePassword($user , $body);
+            
+            if (!empty($responsePassword->error)){
+                $alert = ["message" => $responsePassword->error];
+            }else {
+                $alert = ["message" => "Mot de passe mis à jour avec succès"];
+            }
+        }
+        
        
         $_SESSION['user'] = $user;
 
         return self::$twig->render(
-            'qr.html.twig',
+            'password.html.twig',
             [
                 'alert' => $alert,
                 'path' => self::path(),
-                'user' => $_SESSION['user'], 
-                'qr' => $qr, 
+                'user' => $_SESSION['user'] , 
                 'cover' => $cover
             ]
         );
     }
 
+    public static function error404()
+    {
+        self::init();
+    }
 }

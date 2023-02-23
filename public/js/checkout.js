@@ -1,5 +1,5 @@
 window.onload = ()=>{
- Stripe = Stripe('pk_test_51LpWzeK8zI5Hqeq06iLuwboMxLC1Gji2qGDeGYW18OsfLgOh39962BIOyxHv3V2FYgoJvqofqhI2szkNg8HPU6cV00qUovUR9A');
+ Stripe = Stripe('pk_live_51LydyME5OayV6Hmp1ed0NKzhYrTrzP4CyMxjiLF9IPNWO6c2w4KHyshTEHiXElrrhGheNp3dppZarVChQ2uqYWB100yYmujAk2');
     let elements = Stripe.elements();
     let redirect = 'home?valid=ok';
     let name = document.getElementById('name');
@@ -36,3 +36,5 @@ window.onload = ()=>{
         })
     })
 }
+
+

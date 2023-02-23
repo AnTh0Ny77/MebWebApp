@@ -44,6 +44,8 @@ class User{
 
     private $transac;
 
+    private $userScoreTotal;
+
     public function getId(){
         return $this->id;
     }
@@ -65,7 +67,7 @@ class User{
     }
 
     public function getUsername(){
-        return $this->username;
+        return str_replace('_', ' ', $this->username);
     }
 
     public function setUsername($username){
@@ -378,6 +380,26 @@ class User{
     public function setTransac($transac)
     {
         $this->transac = $transac;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of userScoreTotal
+     */ 
+    public function getUserScoreTotal()
+    {
+        return $this->userScoreTotal;
+    }
+
+    /**
+     * Set the value of userScoreTotal
+     *
+     * @return  self
+     */ 
+    public function setUserScoreTotal($userScoreTotal)
+    {
+        $this->userScoreTotal = $userScoreTotal;
 
         return $this;
     }

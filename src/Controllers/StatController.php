@@ -67,6 +67,15 @@ class StatController extends BaseController
         }else{
             $user->setExploreCoin($client->exploreCoin);
         }
+
+        if (!empty($user->getCoverPath())) {
+            $cover = $userServices->getUserCover($user);
+            $cover = 'data:image/png;base64,' . base64_encode($cover);
+            $cover = '<figure class="image col-6 col-md-5 panel-image"><img class="user-image mx-auto"
+            src="' .$cover . '" alt="Cover Image"></figure>';
+        }else {
+            $cover = null;
+        }
         
        
         $_SESSION['user'] = $user;
@@ -78,7 +87,8 @@ class StatController extends BaseController
                 'cover_rank' => $cover_rank ,
                 'rank_games' => $rank_games,
                 'path' => self::path(),
-                'user' => $_SESSION['user']
+                'user' => $_SESSION['user'] , 
+                'cover' => $cover
             ]
         );
     }

@@ -54,6 +54,75 @@ class UserService {
         return $response;
     }
 
+    public  function postFile($user ,  $files  , $id){
+        $authService = new AuthService();
+        try {
+            $temp = $this->Client->post(
+                '/api/user/coverclient',  
+            ['headers' => $authService->makeHeadersUser($user),
+             'multipart' => [
+                [
+                    'name' =>  'user__id',
+                    'contents' =>  $id] ,
+                [
+                    'name' =>  'cover',
+                    'contents' => $files]
+                ]]);
+        } catch(ClientException $exeption) {$temp = $exeption->getResponse();}
+        $response = json_decode($temp->getBody()->read(32768));
+        
+        return $response;
+    }
+
+
+    public function postClient($user , $body){
+        $authService = new AuthService();
+        if (!$user instanceof User)
+            return $this->returnError( 'Reconnexion requise');
+        try {
+            $user = $this->Client->post('/api/user/postclient', 
+            ['headers' => $authService->makeHeadersUser($user) ,
+            'json' => $body]);
+        } catch(ClientException $exeption) {$user = $exeption->getResponse();}
+        
+        $response = json_decode($user->getBody()->read(32768));
+        
+        return $response;
+    }
+
+    public function updatePassword($user , $body){
+
+        $authService = new AuthService();
+       
+        if (!$user instanceof User)
+            return $this->returnError( 'Reconnexion requise');
+
+        try {
+            $user = $this->Client->put('/api/user/'.$user->getId().'/password', 
+            ['headers' => $authService->makeHeadersUser($user) ,
+            'json' => $body]);
+        } catch(ClientException $exeption) {$user = $exeption->getResponse();}
+        
+        $response = json_decode($user->getBody()->read(32768));
+        
+        return $response;
+
+    }
+
+    public function getUserCover($user){
+        $authService = new AuthService();
+       
+        if (!$user instanceof User)
+            return $this->returnError( 'Reconnexion requise');
+
+        try {
+            $user = $this->Client->get('/api/user/'.$user->getId().'/cover', ['headers' => $authService->makeHeadersUser($user)]);
+        } catch(ClientException $exeption) {$user = $exeption->getResponse();}
+        
+        $response = $user->getBody()->read(3276898);
+        return $response;
+    }
+
     public function getAdminData($user){
        
         $mappingService = new MappingServices();
@@ -65,8 +134,8 @@ class UserService {
         try {
             $user = $this->Client->get('/api/user/'.$user->getId().'/client', ['headers' => $authService->makeHeadersUser($user)]);
         } catch(ClientException $exeption) {$user = $exeption->getResponse();}
-        
-        $response = json_decode($user->getBody()->read(32768));
+       
+        $response = json_decode($user->getBody()->read(32768789));
        
         return $response;
     }

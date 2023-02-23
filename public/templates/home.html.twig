@@ -15,48 +15,90 @@
 {% endif %}
 <main class=" flex-wrap  d-flex wrapper-home justify-content-between">
   {% include "elements/sidebar.html.twig" %}
-  <div class="explorecard">
-    <div class="left-explorecard">
-        <div class="title-explorecard"> Explore Coin</div>
-        <div class="subtitle-explorecard">Solde disponible</div>
-        <div class="data-explorecard"><span class="explore-coin"></span>{{user.explorecoin}} EXC</div>
-    </div>
-    <a href="amount" class="button-explore-card">recharger</a>
+  <div class="explorecard-info">
+    <div class="title-explorecard"> Informations du compte <span class="left-clock"><i class="fas fa-lock"></i></span></div>
+    <div class="subtitle-explorecard"> à jour au {{date}}</div>
+    <hr class="mx-4">
+    <div class="subtitle-explorecard mt-3"><i class="fas fa-paper-plane"></i> <span class="mx-3">{{user.email}}</span><br></div>
+    <a class="subtitle-explorecard link-myeb"> <i class="fas fa-phone"></i> <span class="mx-3">{{user.phone}} </span> <br></a>
+    <a href="pass" class="subtitle-explorecard link-myeb"> <i class="fas fa-lock"></i> <span class="mx-3"> Changer de mot de passe </span><br></a>
+	<a href="mailto:adrien@myexplorebag.com" class="button-explore-card-secondary"> <i class="fas fa-pencil-alt"></i> Mettre à jour mes informations</a> 
   </div>
+  {% if user.clientInfiniteQr == 0  %}
+    <div class="explorecard">
+      <div class="left-explorecard">
+          <div class="title-explorecard"> Explore Coin</div>
+          <div class="subtitle-explorecard">Solde disponible</div>
+          <div class="data-explorecard info-font-normal"><span class="explore-coin"></span> <span class="info-font-bold">{{user.explorecoin ~ ' ' ~ ' '}} </span>  EXC</div>
+      </div>
+      <a href="amount" class="button-explore-card">recharger</a>
+    </div>
+  {% endif %}
   <div class="explorecard">
-    <div class="left-explorecard">
+    <div class="">
         <div class="title-explorecard"> Explore Bag</div>
         <div class="subtitle-explorecard">Flotte disponible</div>
-        <div class="data-explorecard">{{user.bagNumber}} sacs à dos</div>
-    </div>
-    <div class="explorebag">
-
+        <div class="d-flex justify-content-between">
+          <div class="data-bag">{{user.bagNumber}} sacs à dos</div>
+          <div class="explorebag">
+          </div>
+        </div>
     </div>
   </div>
   <div class="explorecard">
     <div class="title-explorecard"> Jeux disponibles </div>
     <div class="subtitle-explorecard">Jeux en gestion</div>
-    <div class="data-explorecard-red">{{user.clientGames|length}} 
+    <div class="info-font-bold info-placement">{{user.clientGames|length}} 
     {% if user.clientGames|length > 1 %}
       jeux
     {% else %}
       jeu
     {% endif %}</div>
-    <div  class="info-bas-explore-card">
-      
-     {% for game in user.clientGames %}
-        {{game.Game.name}}
-     {% endfor %}
+    <div  class="data-explore-card-secondary">
+      {% if user.clientGames|length > 2 %}
+          {{user.clientGames[0].Game.name}} .....
+      {% else %}
+          {{user.clientGames[0].Game.name}}
+      {% endif %}
     </div>
   </div>
   <div class="explorecard">
-    <div class="left-explorecard">
+    <div class="">
+      <div class="title-explorecard">Rang Ambassadeur</div>
+      <div class="subtitle-explorecard">Améliorez votre rang</div>
+      <div class="d-flex justify-content-between">
+        <div class="mini-data-bag">Ambassadeur de niveau  {{user.rank.id}} </div>
+        <div class="rank-img">
+         
+        </div>
+      </div>
+  </div>
+    {# <div class="left-explorecard">
       <div class="title-explorecard"> Rang {{user.rank.name}} </div>
       <div class="subtitle-explorecard">Améliorez votre rang</div>
-      <div class="data-explorecard">{{rank_games}} Jeux débloqués</div>
+      <div class="info-font-bold">{{rank_games}} Jeux débloqués</div>
   </div>
     <div class="svg-container">
       {{ cover_rank | raw }}
+    </div> #}
+  </div>
+  <div class="explorecard">
+    <div class="">
+        <div class="title-explorecard"> Suivez nous sur les réseaux</div>
+        <div class="d-flex flex-wrap justify-content-between mt-3 mx-auto">
+          <div class="col-5 text-center my-2">
+            <a href="https://www.facebook.com/myexplorebag/" target="_blank" class="network-link"><i class="fab fa-facebook-f"></i> Facebook</a> 
+          </div>
+          <div class="col-5 text-center my-2">
+            <a href="https://www.linkedin.com/company/my-explore-bag" target="_blank" class="network-link "><i class="fab fa-linkedin-in"></i> Linkedin</a> 
+          </div>
+          <div class="col-5 text-center my-3">
+          <a href="https://www.instagram.com/myexplorebag/" target="_blank" class="network-link "><i class="fab fa-instagram"></i> Instagram</a> 
+          </div>
+          <div class="col-5 text-center my-3">
+            <a href="https://www.linkedin.com/company/my-explore-bag" target="_blank" class="network-link"><i class="far fa-envelope"></i> Explore News</a>
+          </div>
+        </div>
     </div>
   </div>
 </main>

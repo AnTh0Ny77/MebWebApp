@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+{% block style %}
+<link rel="stylesheet" href="public/css/sidebar.css">
+<link rel="stylesheet" href="public/css/base.css">
+<link rel="stylesheet" href="public/css/datatables.min.css">
+{% endblock %}
+{% block main %}
+
+    
+{% include "elements/sidebar.html.twig" %}
+{% if alert %}
+<div class="alert-center alert alert-warning alert-dismissible fade show" role="alert">
+    {{alert['message']}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </button>
+</div>
+{% endif %}
+<main class=" flex-wrap  d-flex wrapper-home justify-content-between">
+    <div class="explorecard-xl">
+        <div class="">
+            <div class="d-flex">
+                <div class="col-10">
+                    <div class="title-explorecard"> Clients</div>
+                    <div class="subtitle-explorecard">Liste des client MYEB</div>
+                </div>
+            <a  href="formsUser" class="btn-explore-yellow-large marg-3 px-3 mt-4">Ajouter</a>
+            </div>
+            
+            <div class="d-flex justify-content-center">
+                <div class="col-11 mt-2">
+                    <table id="table" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+      </div>
+  
+</main>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="public/js/jquery.js"></script>
+<script type="text/javascript" src="public/js/datatable.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        let body = {
+            "terces" : "TEstEawviyupPPlFRT789@VoYaJoUersesS77125!87@DeYaoURtH@?7854ZAEEcWWW.www.ExplorE"
+        }
+        $.ajax('https://explorelab.app/api/user/clientlist', {
+            headers: { 
+                'Accept': 'application/json',
+                'Content-Type': 'application/json' 
+            },
+            type: 'POST',
+            method: "POST",
+            'dataType': 'json',
+            crossDomain: true,
+            data: JSON.stringify(body),
+            success: function (data, status, xhttp) { 
+                console.log(data);
+                dataSet = [];
+                data.forEach(function(element) {
+                    let phone = 'Non Renseigné';
+                    let type = 'QR code Payant';
+                    if(element.clientInfiniteQr == 1){type = 'QR ilimité'}
+                    if(element.phone){phone = element.phone};
+                    let jeux = '';
+                    if(element.clientGames.length > 0){
+                        element.clientGames.forEach(function(game){
+                            jeux +=  game.Game.name + ' <br>';
+                        }) 
+                    }else{jeux = 'Aucun Jeux'}
+                    let temp = [element.id ,element.username , element.email ,phone  ,type  , jeux];
+                    if(element.id != 914){
+                        dataSet.push(temp);
+                    }
+                   
+                  });
+                $('#table').DataTable({
+                    order: [[0, 'desc']] ,
+                    lengthMenu: [ 5],
+                    responsive: true ,
+                    data: dataSet ,
+                    bLengthChange : false ,
+                    scrollY:        "300px",
+                    scrollX:        true,
+                    scrollCollapse: true,
+                    paging:         false,
+                    columns: [
+                        {visible: false},
+                        { title: '<i class="fas fa-user"></i> Username'},
+                        { title: '<i class="fas fa-envelope-open-text"></i> email'},
+                        { title: '<i class="fas fa-phone"></i> Telephone'},
+                        { title: '<i class="fas fa-key"></i> Type'},
+                        { title: '<i class="fas fa-gamepad"></i> Jeux' }
+                    ],language: {
+                        lengthMenu: "Voir _MENU_ clients par page",
+                        zeroRecords: "Aucuns clients",
+                        info: "Page: _PAGE_ sur _PAGES_ au total",
+                        infoEmpty: "Aucuns clients",
+                        infoFiltered: "(résultats sur _MAX_ clients disponibles)",
+                        search: "Rechercher"
+                    } ,createdRow: function (row, data, index) {
+                        $(row).attr('data-toggle', "modal");
+                        $(row).attr('data-target', "#modalModif");
+                        $(row).css('cursor', 'pointer');
+                        $(row).on('click', function () {
+                            let value = data[0]
+                            location.href = 'formsUser?id='+value;
+                        })
+                    },
+                });
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+                results = jqXhr.responseJSON.msg;
+
+            }
+
+        });
+
+        
+    });
+  
+</script>
+{% endblock %}

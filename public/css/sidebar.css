@@ -1,6 +1,6 @@
 
 .sidebar{
-    position: absolute;
+    position: fixed;
     width: 20%;
     min-width: 300px;
     min-height: 95vh;
@@ -33,7 +33,7 @@
 }
 
 .sold-exc{
-    font-family: 'Roboto';
+    font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
@@ -54,7 +54,6 @@
 }
 
 .exploreSide{
-   
     margin: 8% auto;
     width: 139px;
     height: 30px;
@@ -89,7 +88,7 @@
 .side-link{
 
     text-decoration: none;
-    font-family: 'Roboto';
+    font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 13px;
@@ -100,7 +99,7 @@
 .side-link-actif{
     text-decoration: none;
     border: none;
-    font-family: 'Roboto';
+    font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 13px;

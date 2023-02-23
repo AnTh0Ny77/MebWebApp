@@ -1,0 +1,238 @@
+{% extends 'base.html.twig' %}
+{% block style %}
+<link rel="stylesheet" href="public/css/sidebar.css">
+<link rel="stylesheet" href="public/css/base.css">
+<link rel="stylesheet" href="public/css/datatables.min.css">
+{% endblock %}
+{% block main %}
+
+    
+{% include "elements/sidebar.html.twig" %}
+{% if alert %}
+<div class="alert-center alert alert-warning alert-dismissible fade show" role="alert">
+    {{alert['message']}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </button>
+</div>
+{% endif %}
+<main class=" flex-wrap  d-flex wrapper-home justify-content-between">
+    <div class="explorecard-xl">
+        <div class="">
+            <div class="d-flex">
+                <div class="col-10">
+                    {% if modif %}
+                        <div class="title-explorecard"> Modification de Clients</div>
+                        <div class="subtitle-explorecard">Liste des client MYEB</div>
+                    {% else %}
+                        <div class="title-explorecard"> Creation de client</div>
+                        <div class="subtitle-explorecard"></div>
+                    {% endif %}
+                    
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-center">
+                <form method="POST" id="createFormsUser" enctype="multipart/form-data" action="formsUser" class="col-11 mt-2">
+                    <div class="d-flex flex-row justify-content-end mt-3">
+                        <div class="d-flex flex-column mx-2">
+                            <div class="subtitle-explorecard">Username</div>
+                            <input type="text" id="username" name="username" class="input-myeb-small" required>
+                        </div>
+                        <div class="d-flex flex-column mx-2">
+                            <div class="subtitle-explorecard">email</div>
+                            <input type="email" id="email" name="email"  class="input-myeb-small" required>
+                        </div> 
+                        <div class="d-flex flex-column mx-2">
+                            <div class="subtitle-explorecard">Mot de passe</div>
+                            <input type="password" id="password" name="password"  class="input-myeb-small" required>
+                        </div> 
+                    </div> 
+                    <div class="d-flex flex-row mt-3 justify-content-end">
+                        <div class="d-flex flex-column mx-2">
+                            <div class="subtitle-explorecard">Type de compte</div>
+                            <select name="type" id="type" class="input-myeb-small">
+                                <option value="1">Qr payants</option>
+                                <option value="2">Qr ilimités</option>
+                            </select>
+                        </div>
+                        <div class="d-flex flex-column mx-2">
+                            <div class="subtitle-explorecard">Téléphone</div>
+                            <input type="text" id="phone" name="phone"  class="input-myeb-small" required>
+                        </div> 
+                        <div class="d-flex flex-column mx-2 ">
+                            <div class="subtitle-explorecard">Location : 5.6766544,56.77778</div>
+                            <input type="text" id="location" name="location"  class="input-myeb-small" required>
+                        </div> 
+                    </div> 
+                    <div class="d-flex flex-row mt-3 justify-content-end">
+                        <div class="d-flex flex-column mx-2">
+                            <div class="subtitle-explorecard">Nombres de sacs</div>
+                            <input type="text" id="bag" name="bag"  class="input-myeb-small" required>
+                        </div>
+                        <div class="d-flex flex-column mx-2">
+                            <div class="subtitle-explorecard">Credit en explore Coins</div>
+                            <input type="text" id="exc" name="exc" class="input-myeb-small" required>
+                        </div>
+
+                    </div>
+                    <div class="d-flex flex-row mt-3 justify-content-end">
+                        <div class="d-flex flex-column mx-2">
+                            <div class="subtitle-explorecard">Couverture</div>
+                            <input type="file" name="cover" id="file"  accept=".png, .jpeg, .jpg" class="form-control">
+                        </div>  
+                    </div> 
+                    <div class="d-flex flex-row mt-4 justify-content-end">
+                        <div class="alert" id="formsalert" role="alert">
+                            
+                            </button>
+                        </div>
+                        <button type="button" id="subform" class="btn-explore-yellow-large  marg-3 px-3">Valider</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+  
+</main>
+{% endblock %}
+{% block script %}
+<script type="text/javascript" src="public/js/jquery.js"></script>
+<script type="text/javascript" src="public/js/datatable.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        let body = {
+            "terces" : "TEstEawviyupPPlFRT789@VoYaJoUersesS77125!87@DeYaoURtH@?7854ZAEEcWWW.www.ExplorE"
+        }
+
+        let checkFile = function(){
+            const fileInput = $('#file');
+            const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+            if (!allowedExtensions.exec(fileInput.val())) {
+                return 'Veuillez sélectionner un fichier de type PNG, JPEG ou JPG.';
+            }
+            return false;
+        }
+        let validatePassword = function () {
+            const passwordInput = $('#password').val();
+            const password = passwordInput.trim();
+            // Vérifier la longueur minimale de 8 caractères
+            if (password.length < 8) {
+              return "Le mot de passe doit contenir au moins 8 caractères.";
+            }
+            // Vérifier la présence d'au moins un chiffre
+            if (!/\d/.test(password)) {
+              return "Le mot de passe doit contenir au moins un chiffre.";
+            }
+            // Vérifier la présence d'au moins une majuscule
+            if (!/[A-Z]/.test(password)) {
+              return "Le mot de passe doit contenir au moins une majuscule.";
+            }
+            // Vérifier la présence d'au moins une minuscule
+            if (!/[a-z]/.test(password)) {
+              return "Le mot de passe doit contenir au moins une minuscule.";
+            }
+            // Vérifier la présence d'au moins un caractère spécial
+            if (!/[\W_]/.test(password)) {
+              return "Le mot de passe doit contenir au moins un caractère spécial.";
+            }
+            // Si toutes les conditions sont remplies, retourner false pour indiquer que le mot de passe est conforme
+            return false;
+          }
+
+          function estNumerique(idInput) {
+            const valeur = document.getElementById(idInput).value;
+            if (!isNaN(parseFloat(valeur)) && isFinite(valeur)) {
+              return false;
+            } else {
+              return true;
+            }
+          }
+
+
+          let validateLocationInput = function () {
+            const locationInput = $("#location").val();
+            const locationValue = locationInput.trim();
+            // Vérifier si la valeur ne contient que des nombres et les caractères . et ,
+            if (!/^\d+([.,]\d+)+$/.test(locationValue)) {
+              return false; // ou une erreur, ou un message d'erreur
+            }
+            // Diviser la valeur en deux parties, avant et après la virgule
+            const parts = locationValue.split(",");
+            const lat = parseFloat(parts[0]);
+            const lng = parseFloat(parts[1].replace(".", ","));
+            // Construire l'objet JSON avec les coordonnées
+            const coordinates = { lat, lng };
+            return coordinates;
+          }
+
+          let validateUsernameInput = function () {
+            const usernameInput = document.getElementById("username");
+            const usernameValue = usernameInput.value.trim();
+          
+            // Vérifier si la valeur contient un espace ou des caractères spéciaux (sauf _)
+            if (/\s/.test(usernameValue) || /[^a-zA-Z0-9_]/.test(usernameValue)) {
+              return "Le nom d'utilisateur ne doit pas contenir d'espace ou de caractère spécial (sauf _)";
+            }
+          
+            // Vérifier si la valeur a une longueur d'au moins 5 caractères
+            if (usernameValue.length < 5) {
+              return "Le nom d'utilisateur doit contenir au moins 5 caractères";
+            }
+          
+            // La valeur est valide, retourner null
+            return null;
+          }
+
+          let validateEmail = function(){
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // expression régulière pour valider l'email
+            return regex.test($('#email').val()); 
+          }
+          
+          
+        $('#subform').on('click' , function(e){
+            if(validateUsernameInput()){
+                $('#formsalert').text(validateUsernameInput())
+            }else{
+                
+                if(validatePassword()){
+                    $('#formsalert').text(validatePassword())
+                }else{
+                        if(!validateLocationInput()){
+                            let alert = 'la location n est pas correctement indiquée ';
+                            $('#formsalert').text(alert)
+                        }else{
+                            $('#location').val(JSON.stringify(validateLocationInput()))
+                            if(checkFile()){
+                                $('#formsalert').text(checkFile())
+                            }else{
+                                if(!validateEmail()){
+                                    
+                                    $('#formsalert').text('L email n est pas conforme')
+                                }else{
+                                    if($('#exc').val != null && estNumerique('exc')){
+                                        $('#formsalert').text('Le solde en explore coin n est pas conforme')
+                                    }else{
+                                        if(estNumerique('bag')){
+                                            $('#formsalert').text('Le nombre de sac n est pas correctement indiqué<z')
+                                        }
+                                        else{
+                                            console.log($('#createFormsUser'));
+                                            $('#createFormsUser').submit();
+                                        }
+                                    }
+                                    
+
+                                    
+                                }
+                               
+                            }
+
+                        }
+                    }
+                }
+            }
+        )  
+    });
+  
+</script>
+{% endblock %}

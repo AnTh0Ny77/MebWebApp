@@ -3,27 +3,33 @@
 
     </div>
     <div class="profile-pic d-flex justify-content-center">
+            {% if cover %}
+                {{cover|raw}}
+            {% else %}
             <figure class="image col-6 col-md-5 panel-image"><img class="user-image mx-auto"
-                    src="public/images/nice.JPG"></figure>
+                src="public/images/nice.JPG"></figure>
+            {% endif %}
+           
     </div>
     <div class="username">
         <h2 class="h2-myeb">{{user.getUsername()}}</h2>
     </div>
+    {% if user.clientInfiniteQr == 0  %}
     <div class="exc-sold">
         <div class="mini-exc">
         </div>
         <div class="sold-exc">
             {{user.explorecoin}}
         </div>
-
     </div>
+    {% endif %}  
     <div class="qr-link" id="qrLink">
         <a href="qr" class="link-qr"></a>
     </div>
     <div class="info-myeb">
         Générer un QRJeu
     </div>
-    <div class="d-flex flex-column mt-4  wrapper-link">
+    <div class="d-flex flex-column mt-4 mb-5  wrapper-link">
         <div class="mt-2  d-flex justify-content-start picto-actif">
             {% if path == 'home' %}
                 <a href="home" class="side-link-actif mx-4"><i class="fas fa-eye"></i> Vue d'ensemble</a>
