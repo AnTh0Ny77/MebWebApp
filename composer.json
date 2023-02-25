@@ -3,7 +3,7 @@
         "psr-4" : {"Src\\" : "Src"}
     },
     "require": {
-        "twig/twig": "3.0",
+        "twig/twig": "3.2",
         "guzzlehttp/guzzle": "7.0|^7.0.1",
         "stripe/stripe-php": "^9.6"
     }
