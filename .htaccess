@@ -1,6 +1,0 @@
-RewriteEngine On
-RewriteBase /MebWebApp/
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_METHOD} ^(CONNECT|DEBUG|DELETE|MOVE|PUT|GET|POST|TRACE|TRACK)
-RewriteRule ^(.+)$ index.php [QSA,L]
