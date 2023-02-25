@@ -20,58 +20,50 @@
         <div class="">
             <div class="d-flex">
                 <div class="col-10">
-                    {% if modif %}
                         <div class="title-explorecard"> Modification de Clients</div>
-                        <div class="subtitle-explorecard">Liste des client MYEB</div>
-                    {% else %}
-                        <div class="title-explorecard"> Creation de client</div>
-                        <div class="subtitle-explorecard"></div>
-                    {% endif %}
-                    
                 </div>
             </div>
-            
             <div class="d-flex justify-content-center">
-                <form method="POST" id="createFormsUser" enctype="multipart/form-data" action="formsUser" class="col-11 mt-2">
+                <form method="POST" id="createFormsUser" enctype="multipart/form-data" action="formsUser?id={{client.id}}" class="col-11 mt-2">
                     <div class="d-flex flex-row justify-content-end mt-3">
+                        <input type="hidden" name="id" value="{{client.id}}">
                         <div class="d-flex flex-column mx-2">
                             <div class="subtitle-explorecard">Username</div>
-                            <input type="text" id="username" name="username" class="input-myeb-small" required>
+                            <input type="text" id="username" value="{{client.username}}" name="username" class="input-myeb-small" required>
                         </div>
                         <div class="d-flex flex-column mx-2">
                             <div class="subtitle-explorecard">email</div>
-                            <input type="email" id="email" name="email"  class="input-myeb-small" required>
+                            <input type="email" id="email" name="email" value="{{client.email}}" class="input-myeb-small" required>
                         </div> 
-                        <div class="d-flex flex-column mx-2">
-                            <div class="subtitle-explorecard">Mot de passe</div>
-                            <input type="password" id="password" name="password"  class="input-myeb-small" required>
-                        </div> 
-                    </div> 
-                    <div class="d-flex flex-row mt-3 justify-content-end">
                         <div class="d-flex flex-column mx-2">
                             <div class="subtitle-explorecard">Type de compte</div>
-                            <select name="type" id="type" class="input-myeb-small">
-                                <option value="1">Qr payants</option>
+                            <select  value="{{client.clientInfiniteQr}}" name="type" id="type" class="input-myeb-small">
+                                
+                                <option value="1" >Qr payants</option>
                                 <option value="2">Qr ilimités</option>
                             </select>
                         </div>
+                        
+                    </div> 
+                    <div class="d-flex flex-row mt-3 justify-content-end">
+                        
                         <div class="d-flex flex-column mx-2">
                             <div class="subtitle-explorecard">Téléphone</div>
-                            <input type="text" id="phone" name="phone"  class="input-myeb-small" required>
+                            <input type="text" id="phone" name="phone"  value="{{client.phone}}" class="input-myeb-small" required>
                         </div> 
                         <div class="d-flex flex-column mx-2 ">
                             <div class="subtitle-explorecard">Location : 5.6766544,56.77778</div>
-                            <input type="text" id="location" name="location"  class="input-myeb-small" required>
+                            <input type="text" id="location" name="location" value="{{client.location}}"  class="input-myeb-small" required>
                         </div> 
                     </div> 
                     <div class="d-flex flex-row mt-3 justify-content-end">
                         <div class="d-flex flex-column mx-2">
                             <div class="subtitle-explorecard">Nombres de sacs</div>
-                            <input type="text" id="bag" name="bag"  class="input-myeb-small" required>
+                            <input type="text" id="bag" name="bag"  value="{{client.bagNumber}}"  class="input-myeb-small" required>
                         </div>
                         <div class="d-flex flex-column mx-2">
                             <div class="subtitle-explorecard">Credit en explore Coins</div>
-                            <input type="text" id="exc" name="exc" class="input-myeb-small" required>
+                            <input type="text" id="exc" name="exc" value="{{client.exploreCoin}}" class="input-myeb-small" required>
                         </div>
 
                     </div>
@@ -112,32 +104,13 @@
             }
             return false;
         }
-        let validatePassword = function () {
-            const passwordInput = $('#password').val();
-            const password = passwordInput.trim();
-            // Vérifier la longueur minimale de 8 caractères
-            if (password.length < 8) {
-              return "Le mot de passe doit contenir au moins 8 caractères.";
+        let checkFilePresence = function(){
+            const fileInput = $('#file');
+            if (fileInput[0].files.length === 0) {
+                return false;
             }
-            // Vérifier la présence d'au moins un chiffre
-            if (!/\d/.test(password)) {
-              return "Le mot de passe doit contenir au moins un chiffre.";
-            }
-            // Vérifier la présence d'au moins une majuscule
-            if (!/[A-Z]/.test(password)) {
-              return "Le mot de passe doit contenir au moins une majuscule.";
-            }
-            // Vérifier la présence d'au moins une minuscule
-            if (!/[a-z]/.test(password)) {
-              return "Le mot de passe doit contenir au moins une minuscule.";
-            }
-            // Vérifier la présence d'au moins un caractère spécial
-            if (!/[\W_]/.test(password)) {
-              return "Le mot de passe doit contenir au moins un caractère spécial.";
-            }
-            // Si toutes les conditions sont remplies, retourner false pour indiquer que le mot de passe est conforme
-            return false;
-          }
+            return true;
+        }
 
           function estNumerique(idInput) {
             const valeur = document.getElementById(idInput).value;
@@ -149,7 +122,6 @@
           }
 
 
-          
           let validateLocationInput = function () {
             const locationInput = $("#location").val();
             const locationValue = locationInput.trim();
@@ -166,7 +138,6 @@
             const coordinates = { lat, lng };
             return JSON.stringify(coordinates);
           }
-          
 
           let validateUsernameInput = function () {
             const usernameInput = document.getElementById("username");
@@ -196,20 +167,11 @@
             if(validateUsernameInput()){
                 $('#formsalert').text(validateUsernameInput())
             }else{
-                
-                if(validatePassword()){
-                    $('#formsalert').text(validatePassword())
-                }else{
                         if(!validateLocationInput()){
                             let alert = 'la location n est pas correctement indiquée ';
                             $('#formsalert').text(alert)
-                        }else{
-                            $('#location').val(validateLocationInput())
-                            if(checkFile()){
-                                $('#formsalert').text(checkFile())
-                            }else{
+                        }else{ 
                                 if(!validateEmail()){
-                                    
                                     $('#formsalert').text('L email n est pas conforme')
                                 }else{
                                     if($('#exc').val != null && estNumerique('exc')){
@@ -219,15 +181,20 @@
                                             $('#formsalert').text('Le nombre de sac n est pas correctement indiqué<z')
                                         }
                                         else{
-                                            console.log($('#createFormsUser'));
-                                            $('#createFormsUser').submit();
-                                        }
+                                            if(checkFilePresence()){
+                                                if(checkFile()){
+                                                    $('#formsalert').text(checkFile())
+                                                }else{
+                                                    $('#location').val(validateLocationInput())
+                                                    $('#createFormsUser').submit();
+                                                }
+                                            }
+                                            else{
+                                                $('#location').val(validateLocationInput())
+                                                $('#createFormsUser').submit();
+                                            }
+                                           
                                     }
-                                    
-
-                                    
-                                }
-                               
                             }
 
                         }

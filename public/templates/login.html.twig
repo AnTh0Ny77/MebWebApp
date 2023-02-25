@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block style %}
-
+<link rel="stylesheet" href="public/css/sidebar.css">
 
 {% endblock %}
 {% block main %}
@@ -13,13 +13,15 @@
             {{alert['message']}}
         </div>
         {% endif %}
+        <div class="exploreSide">
+
+        </div>
         <div class="form-floating my-4 ">
-                <div class="subtitle-explorecard">Nom d' utilisateur</div>
+                <div class="subtitle-explorecard mb-2">Nom d' utilisateur</div>
                 <input type="text" class="input-myeb" name="username" value="{{alert['username']}}" placeholder="">
-            
         </div>
         <div class="form-floating my-4">
-            <div class="subtitle-explorecard">Mot de passe</div>
+            <div class="subtitle-explorecard mb-2">Mot de passe</div>
             <input type="password" class="input-myeb" value="{{alert['password']}}" name="password"  placeholder="">
         </div>
 

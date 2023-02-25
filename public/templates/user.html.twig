@@ -77,7 +77,7 @@
                             jeux +=  game.Game.name + ' <br>';
                         }) 
                     }else{jeux = 'Aucun Jeux'}
-                    let temp = [element.id ,element.username , element.email ,phone  ,type  , jeux];
+                    let temp = [element.id , element.id + '<br> ' +  element.username , element.email ,phone  ,type  , jeux];
                     if(element.id != 914){
                         dataSet.push(temp);
                     }

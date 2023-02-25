@@ -285,6 +285,10 @@ td{
     text-align: center;
     border: none;
     cursor: pointer;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
     float: right;
     background: #074A36;
     border-radius: 5px;
@@ -317,7 +321,7 @@ td{
     padding-right: 8px;
     padding-top: 4px;
     padding-bottom: 4px;
-    height: 33px;
+    
     color: #F2F2F2;
     text-align: center;
     background: #E6EDEB;

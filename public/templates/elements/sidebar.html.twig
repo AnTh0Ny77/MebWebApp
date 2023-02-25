@@ -45,6 +45,15 @@
                 <a href="stat" class="side-link mx-4">  <i class="fas fa-chart-line"></i> Statistiques</a>
             {% endif %}   
         </div>
+        {% if user.id == 914 %}
+        <div class="mt-3 d-flex justify-content-start picto-inactif">
+            {% if path == 'user' %}
+                <a href="user" class="side-link-actif mx-4">  <i class="fa-solid fa-user"></i> Clients</a>
+            {% else %}
+                <a href="user" class="side-link mx-4">  <i class="fa-solid fa-user"></i> Clients</a>
+            {% endif %}   
+        </div>
+        {% endif %}
         <div class="mt-3 d-flex justify-content-start picto-inactif">
             <a href="logout" class="side-link mx-4">  <i class="fas fa-sign-out"></i> Se deconnecter</a>
         </div>

@@ -61,46 +61,128 @@ class UserFormsController extends BaseController{
         }
 
         $_SESSION['user'] = $user;
-        
-       
-        
-        if (!empty($_POST['username']) and !empty($_POST['email']) and !empty($_POST['location']) and !empty($_POST['password'])) {
-            $body = [
-                'username' => $_POST['username'] , 
-                'email' => $_POST['email'] ,
-                'location' => $_POST['location'],
-                'password' => $_POST['password'] ,
-                'phone' => $_POST['phone'] , 
-                'type' => $_POST['type'] , 
-                'bag' => $_POST['bag'],
-                'exc' => $_POST['exc']
-            ];
-            $post = $userServices->postClient($user , $body);
-            
-            $email = $post->message;
-            
-            if (!empty($_FILES)){
-                $fileName = $_FILES['cover']['name'];
-                $tempPath = $_FILES['cover']['tmp_name'];
-                $fileSize = $_FILES['cover']['size'];
-                if ($fileSize > 111) {
-                    move_uploaded_file($tempPath, __DIR__ .'/' .$fileName);
-                    $file = $userServices->postFile($user, fopen(__DIR__ . '/' .$fileName , 'r') ,$email);
-                    unlink(__DIR__ .'/' .$fileName);
-                }
-            }
-            header('location user');
-        }
+        if (!empty($_GET['id'])) {
 
-        return self::$twig->render(
-            'userforms.html.twig',
-            [
-                'alert' => $alert,
-                'path' => self::path(),
-                'user' => $_SESSION['user'], 
-                'cover' => $cover
-            ]
-        );
+                //recupe les données du client : 
+
+                $client = $userServices->getUserOne($user, $_GET['id'] );
+                $client = json_decode($client , true);
+                if (!empty($client['location'])) {
+                    $client['location'] = $client['location']['lat'] . ',' . $client['location']['lng'];
+                }else{
+                    $client['location'] = '';
+                }
+                
+                if ($client['clientInfiniteQr'] == true) {
+                    $client['clientInfiniteQr'] = 1 ;
+                }else{
+                    $client['clientInfiniteQr'] = 0 ;
+                }
+
+                if (!empty($_POST['username']) and !empty($_POST['email']) and !empty($_POST['location']) and !empty($_POST['id'])) {
+                    $body = [
+                        'username' => $_POST['username'] , 
+                        'email' => $_POST['email'] ,
+                        'location' => $_POST['location'],
+                        'id' => $_POST['id'] ,
+                        'phone' => $_POST['phone'] , 
+                        'type' => $_POST['type'] , 
+                        'bag' => $_POST['bag'],
+                        'exc' => $_POST['exc']
+                    ];
+
+                    $update = $userServices->putClient($user , $body);
+                  
+                    if(!empty($update->error)){
+
+                        return self::$twig->render(
+                            'userforms.html.twig',
+                            [
+                                'alert' => $update->error ,
+                                'path' => self::path(),
+                                'user' => $_SESSION['user'], 
+                                'cover' => $cover , 
+                                'client' => $client
+                            ]
+                        );
+                    }
+                    if (!empty($_FILES)){
+                        $fileName = $_FILES['cover']['name'];
+                        $tempPath = $_FILES['cover']['tmp_name'];
+                        $fileSize = $_FILES['cover']['size'];
+                        if ($fileSize > 111) {
+                            move_uploaded_file($tempPath, __DIR__ .'/' .$fileName);
+                            $file = $userServices->postFile($user, fopen(__DIR__ . '/' .$fileName , 'r') ,$_POST['email']);
+                            unlink(__DIR__ .'/' .$fileName);
+                        }
+                    }
+                   
+                    header('location: user');
+                    die();
+
+                }
+                return self::$twig->render(
+                    'userformedit.html.twig', [
+                    'alert' => $alert ,
+                    'path' => self::path(),
+                    'user' => $_SESSION['user'], 
+                    'cover' => $cover , 
+                    'client' => $client
+                ]
+                );
+        }else{
+            if (!empty($_POST['username']) and !empty($_POST['email']) and !empty($_POST['location']) and !empty($_POST['password'])) {
+                $body = [
+                    'username' => $_POST['username'] , 
+                    'email' => $_POST['email'] ,
+                    'location' => $_POST['location'],
+                    'password' => $_POST['password'] ,
+                    'phone' => $_POST['phone'] , 
+                    'type' => $_POST['type'] , 
+                    'bag' => $_POST['bag'],
+                    'exc' => $_POST['exc']
+                ];
+                $post = $userServices->postClient($user , $body);
+    
+                if(!empty($post->error)){
+    
+                    return self::$twig->render(
+                        'userforms.html.twig',
+                        [
+                            'alert' => $post->error ,
+                            'path' => self::path(),
+                            'user' => $_SESSION['user'], 
+                            'cover' => $cover
+                        ]
+                    );
+                }
+                
+                $email = $post->message;
+                
+                if (!empty($_FILES)){
+                    $fileName = $_FILES['cover']['name'];
+                    $tempPath = $_FILES['cover']['tmp_name'];
+                    $fileSize = $_FILES['cover']['size'];
+                    if ($fileSize > 111) {
+                        move_uploaded_file($tempPath, __DIR__ .'/' .$fileName);
+                        $file = $userServices->postFile($user, fopen(__DIR__ . '/' .$fileName , 'r') ,$email);
+                        unlink(__DIR__ .'/' .$fileName);
+                    }
+                }
+                header('location: user');
+                die();
+            }
+    
+            return self::$twig->render(
+                'userforms.html.twig',
+                [
+                    'alert' => $alert,
+                    'path' => self::path(),
+                    'user' => $_SESSION['user'], 
+                    'cover' => $cover
+                ]
+            );
+        }
     }
 
 }
