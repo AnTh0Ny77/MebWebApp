@@ -23,47 +23,47 @@ if (!isset($getRequest[1]))
 $globalRequest = $getRequest[0] . $getData; 
 
 switch ($globalRequest){
-    case '/MebWebApp/':
+    case '/':
         echo index::index();
         break;
 
-    case '/MebWebApp/login':
+    case '/login':
         echo index::index();
         break;
 
-    case '/MebWebApp/home':
+    case '/home':
         echo home::index();
         break;
 
-    case '/MebWebApp/qr':
+    case '/qr':
         echo qr::index();
         break;
 
-    case '/MebWebApp/exc'.$getData:
+    case '/exc'.$getData:
         echo pay::index();
         break;
 
-    case '/MebWebApp/amount':
+    case '/amount':
         echo pay::amount();
         break;
     
-    case '/MebWebApp/stat':
+    case '/stat':
         echo stat::index();
         break;
 
-    case '/MebWebApp/logout':
+    case '/logout':
         echo index::logout();
         break;
 
-    case '/MebWebApp/pass':
+    case '/pass':
         echo pass::index();
         break;
 
-    case '/MebWebApp/user':
+    case '/user':
         echo user::index();
         break;
 
-    case '/MebWebApp/formsUser'.$getData:
+    case '/formsUser'.$getData:
         echo forms::index();
         break;
     
