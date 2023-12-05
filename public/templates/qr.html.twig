@@ -15,8 +15,8 @@
     <main class=" flex-wrap  d-flex wrapper-home justify-content-between">
         <div class="wrapper-left">
             <div class="left-invisible-explorecard">
-                <div class="title-explorecard"> Jeux</div>
-                <div class="subtitle-explorecard">Selectionez un jeu</div>
+                <div class="title-explorecard"> Jeu(x)</div>
+                <div class="subtitle-explorecard">Sélectionez un jeu</div>
                 <div class="form-row-myeb">
                     <select class="input-myeb" name="game" id="select-games" required>
                         {% for game in user.getClientGames()%}
@@ -27,26 +27,14 @@
             </div>
             <div class="left-invisible-explorecard">
                 <div class="title-explorecard"> Durée</div>
-                <div class="subtitle-explorecard">Selectionez la durée du jeux</div>
+                <div class="subtitle-explorecard">Selectionez la date limite de validité du jeux</div>
                 <div class="form-row-myeb">
-                    <select class="input-myeb" name="time" id="select-durée" required>
-                        <option value="12">1/2 journée</option>
-                        <option value="24">1 journée</option>
-                        <option value="36">1 journée et demi</option>
-                        <option value="48">2 jours</option>
-                        <option value="60">2 journées et demi</option>
-                        <option value="72" selected>3 jours</option>
-                        <option value="84">3 journées et demi</option>
-                        <option value="96">4 jours</option>
-                        <option value="120">5 jours</option>
-                        <option value="144">6 jours</option>
-                        <option value="168">7 jours</option>
-                    </select>
+                   <input class="input-myeb" type="datetime-local" id="datetime" name="date">
                 </div> 
             </div>
             <div class="left-invisible-explorecard">
                 {% if user.clientInfiniteQr == 0  %}
-                    <div class="title-explorecard">Cout en EXC</div>
+                    <div class="title-explorecard">Coût en EXC</div>
                     <div class="subtitle-explorecard">
                         {% for row in user.getClientGames() %}
                             {{row.Game.name ~  ": "}}<b>{{  row.cost ~ "EXC "}}</b><br>
@@ -54,7 +42,7 @@
                     </div>
                 {% else %}
                     <div class="title-explorecard">Cout en EXC</div>
-                    <div class="subtitle-explorecard">Vous disposez d'un accès ilimité a ce jeux</div>
+                    <div class="subtitle-explorecard">Vous disposez d'un accès ilimité a ce(s) jeu(x)</div>
                 {% endif %}
                 
             </div>
@@ -66,7 +54,7 @@
             <div class="explore-visio">
                 <div class="invisible-explorecard">
                     <div class="title-explorecard">QR code</div>
-                    <div class="subtitle-explorecard">Imprimable ou scannable directement sur l'écran</div>
+                    <div class="subtitle-explorecard">À imprimer ou à scanner directement sur l'écran</div>
                 </div>
                 {% if qr  %}
                     <div class="image-qrcode">

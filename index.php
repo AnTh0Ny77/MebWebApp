@@ -3,6 +3,7 @@ require "vendor/autoload.php";
 use Src\Controllers\IndexController as index;
 use Src\Controllers\HomeController as home;
 use Src\Controllers\QrController as qr;
+use Src\Controllers\Qr2Controller as qr2;
 use Src\Controllers\PaymentController as pay;
 use Src\Controllers\StatController as stat;
 use Src\Controllers\PasswordChangeController as pass;
@@ -37,6 +38,10 @@ switch ($globalRequest){
 
     case '/qr':
         echo qr::index();
+        break;
+
+     case '/qr2'.$getData:
+        echo qr2::index();
         break;
 
     case '/exc'.$getData:

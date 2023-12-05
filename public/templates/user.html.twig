@@ -21,7 +21,7 @@
             <div class="d-flex">
                 <div class="col-10">
                     <div class="title-explorecard"> Clients</div>
-                    <div class="subtitle-explorecard">Liste des client MYEB</div>
+                    <div class="subtitle-explorecard">Liste des clients MYEB</div>
                 </div>
             <a  href="formsUser" class="btn-explore-yellow-large marg-3 px-3 mt-4">Ajouter</a>
             </div>
@@ -69,7 +69,7 @@
                 data.forEach(function(element) {
                     let phone = 'Non Renseigné';
                     let type = 'QR code Payant';
-                    if(element.clientInfiniteQr == 1){type = 'QR ilimité'}
+                    if(element.clientInfiniteQr == 1){type = 'QR ilimités'}
                     if(element.phone){phone = element.phone};
                     let jeux = '';
                     if(element.clientGames.length > 0){

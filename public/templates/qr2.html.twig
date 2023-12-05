@@ -1,0 +1,245 @@
+{% extends 'base.html.twig' %}
+{% block style %}
+<link rel="stylesheet" href="public/css/sidebar.css">
+{% endblock %}
+{% block main %}
+{% if alert %}
+<div class="alert-center alert alert-warning alert-dismissible fade show" role="alert">
+    {{alert['message']}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </button>
+</div>
+{% endif %}
+{% include "elements/sidebar.html.twig" %}
+<form action="qr" method="post">
+    <main class=" flex-wrap  d-flex wrapper-home justify-content-between">
+        <div class="wrapper-left">
+            <div class="left-invisible-explorecard">
+                <div class="title-explorecard"> Jeu(x)</div>
+                <div class="subtitle-explorecard">Sélectionner un jeu</div>
+                <div class="form-row-myeb">
+                    <select class="input-myeb-large forms-padding" name="game" id="select-games" required>
+                        {% for game in user.getClientGames()%}
+                            {% if tempGame ==  game.Game.id %}
+                                 <option value="{{game.Game.id}}" class="forms-padding" selected>{{game.Game.name}}</option>
+                            {% else %}
+                                 <option value="{{game.Game.id}}" class="forms-padding">{{game.Game.name}}</option>
+                            {% endif %}
+                           
+                        {% endfor %}
+                    </select>
+                </div> 
+            </div>
+            <div class="left-invisible-explorecard">
+                <div class="title-explorecard"> Durée</div>
+                <div class="subtitle-explorecard">Sélectionner la date et l'heure de fin de jeu</div>
+                <div class="mt-20">
+                            {% if tempDate != null %}
+                                <input class="input-myeb-large forms-padding" value="{{tempDate}}" type="datetime-local" id="datetime" name="date" >
+                            {% else %}
+                                <input class="input-myeb-large forms-padding" type="datetime-local" id="datetime" name="date" >
+                            {% endif %}
+                  
+                </div> 
+            </div>
+              <div class="left-invisible-explorecard">
+                <div class="title-explorecard"> Sélectionner ou ajouter un lieu de fin</div>
+                <div class="subtitle-explorecard">Sélectionez un jeu</div>
+               
+                <div class="mt-20">
+                    <div class="wrapper-list-myeb accordion accordion-flush" id="accordionFlushExample">
+                        <div class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" >
+                                <div class="d-flex justify-content-between"> 
+                                    <div >
+                                        <h6 class="title-list">{{list_location[0].textColumn}} ( par défaut ) </h6>
+                                      
+                                    </div>
+                                    
+                                </div> 
+                        </div>
+                        {% for location in list_location %}
+                            {% if loop.first %}
+                             <div class="li-myeb mt-4 accordion-collapse collapse" id="flush-collapseOne"  data-bs-parent="#accordionFlushExample">
+                                <div class="d-flex justify-content-between"> 
+                                    <div>
+                                        <a class="link-none" value="{{location.id}}" ><h6 class="title-list">{{location.textColumn}}</h6></a> 
+                                        <small class="mr-3 very-small">{{ "lat: " ~ location.lat ~ " lng:" ~ location.lng}}</small>
+                                        <small class=" very-small"><a class="ml-4 link-maps" target="_blank" href="https://maps.google.com/?q={{location.postal}}">{{location.postal}}</a></small>
+                                    </div>
+                                    <div>
+                                        <button type="button"  value="{{location.value}}" data-bs-toggle="modal" data-bs-target="#modalModif" class=" editC btn-list-myeb"><i class="far fa-edit"></i></button>
+                                    </div>
+                                </div> 
+                                 <hr>
+                            </div>
+                            {% else %}
+                             <div class="li-myeb accordion-collapse collapse" id="flush-collapseOne"  data-bs-parent="#accordionFlushExample">
+                                <div class="d-flex justify-content-between"> 
+                                    <div>
+                                        <a class="link-none" value="{{location.id}}" ><h6 class="title-list">{{location.textColumn}}</h6></a> 
+                                        <small class="mr-3 very-small">{{ "lat: " ~ location.lat ~ " lng:" ~ location.lng}}</small>
+                                        <small class=" very-small"><a class="ml-4 link-maps" target="_blank" href="https://maps.google.com/?q={{location.postal}}">{{location.postal}}</a></small>
+                                    </div>
+                                    <div>
+                                        <button type="button"  value="{{location.value}}" data-bs-toggle="modal" data-bs-target="#modalModif" class=" editC btn-list-myeb"><i class="far fa-edit"></i></button>
+                                    </div>
+                                </div> 
+                                 <hr>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="li-myeb-last accordion-collapse collapse" id="flush-collapseOne"  data-bs-parent="#accordionFlushExample">
+                            <div class="d-flex justify-content-between "> 
+                                <div>
+                                   
+                                </div>
+                                 <div class="bottom-flex">
+                                    <button   type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="  btn-explore-yellow-small"><small><i class="fas fa-plus"></i> Ajouter</small></button>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <div class="left-invisible-explorecard">
+                {% if user.clientInfiniteQr == 0  %}
+                    <div class="title-explorecard">Coût en EXC</div>
+                    <div class="subtitle-explorecard">
+                        {% for row in user.getClientGames() %}
+                            {{row.Game.name ~  ": "}}<b>{{  row.cost ~ "EXC "}}</b><br>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="title-explorecard">Cout en EXC</div>
+                    <div class="subtitle-explorecard">Vous disposez d'un accès ilimité a ce(s) jeu(x)</div>
+                {% endif %}
+                
+            </div>
+            <div class="left-invisible-explorecard">
+                <button class="btn-explore-validation marg-3">Valider</button>
+            </div>
+        </div>
+        <div class="wrapper-right">
+            <div class="explore-visio">
+                <div class="invisible-explorecard">
+                    <div class="title-explorecard">Valider pour générer votre QR code</div>
+                    <div class="subtitle-explorecard">À imprimer ou à scanner directement sur l'écran</div>
+                </div>
+                {% if qr  %}
+                    <div class="image-qrcode">
+                        <img id="qrImage" src="data:image/png;base64,{{qr}}" alt="qrcode" class="img-qr">
+                    </div>
+                {% else %}
+                <div class="image-qrcode">
+                    <div class="subtitle-explorecard-white">Validez pour générer votre qr code </div>
+                </div>
+                {% endif %}
+                    <div class="footer-viso">
+                        <button class="btn-explore-yellow" type="button" id="printButton">Imprimer</button>
+                        <a class="btn-explore-yellow" download="qrcode.png" href="data:image/png;base64,{{qr}}" title="Télécharger">Télécharger</a>
+                    </div>
+            </div>
+    
+        </div>     
+    </main>
+</form>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <form action="qr2" method="post" id="clientLocationForms">
+      <div class="modal-headr">
+        <div> </div>
+        <div>  <h1 class=" fs-5 modal-titre" id="exampleModalLabel"><i class="fas fa-flag-checkered"></i> Configuration du lieu de fin</h1></div>
+      
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       
+       <div class="d-flex flex-column align-items-center justify-content-center">
+            <div class="">
+                <div class="subtitle-explorecard-mini"><b>Nom du lieu de fin de l'aventure *</b></div>
+                <input class="input-myeb forms-padding mt-2" type="text" id="textColumn" name="textColumn" required>
+            </div>
+            <div class="mt-4">
+                <div class="subtitle-explorecard-mini"><b>Coordonnées GPS *</b> <span class="ml-5"> (format : xx.xx , x.xxxx ) </span></div>
+                <input class="input-myeb forms-padding mt-2" type="text" id="JsonColumn" name="JsonColumn" required>
+            </div>
+            <div class="mt-4">
+                <div class="subtitle-explorecard-mini"><b>Adresse postale *</b></div>
+                <input class="input-myeb forms-padding mt-2" type="text" id="postal" name="postal" required>
+            </div>
+            <div class="form-check form-switch mt-3 pd-left">
+                <input class="form-check-input" type="checkbox" value="on"  name="isActive" id="isActive" role="switch" id="flexSwitchCheckDefault"  >
+                <label class="form-check-label label-switch" for="flexSwitchCheckDefault"><b>Lieu de fin par défaut ? </b></label>
+            </div>
+       </div>
+       
+      </div>
+      <div class="modal-footer">
+             <button type="button" id="postlocationB" class="btn-explore-yellow-small"><small> Valider <i class="fas fa-chevron-right"></i></small></button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Modif-->
+<div class="modal fade" id="modalModif" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    <form action="qr2" method="post" id="clientLocationModif">
+        <input type="hidden" name="locationId" id="locationId">
+      <div class="modal-headr">
+        <div> </div>
+        <div>  <h1 class=" fs-5 modal-titre" id="exampleModalLabel"><i class="fas fa-flag-checkered"></i> Modification du lieu de fin</h1></div>
+      
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       
+       <div class="d-flex flex-column align-items-center justify-content-center">
+            <div class="">
+                <div class="subtitle-explorecard-mini"><b>Nom du lieu de fin de l'aventure *</b></div>
+                <input class="input-myeb forms-padding mt-2" type="text" id="textColumnM" name="textColumnM" required>
+            </div>
+            <div class="mt-4">
+                <div class="subtitle-explorecard-mini"><b>Coordonnées GPS *</b> <span class="ml-5"> (format : xx.xx , x.xxxx ) </span></div>
+                <input class="input-myeb forms-padding mt-2" type="text" id="JsonColumnM" name="JsonColumnM" required>
+            </div>
+            <div class="mt-4">
+                <div class="subtitle-explorecard-mini"><b>Adresse postale *</b></div>
+                <input class="input-myeb forms-padding mt-2" type="text" id="postalM" name="postalM" required>
+            </div>
+            <div class="form-check form-switch mt-3 pd-left">
+                <input class="form-check-input forms-padding"  value="on" name="isActiveM" id="isActiveM"  type="checkbox" role="switch" id="flexSwitchCheckDefault"  >
+                <label class="form-check-label label-switch" for="flexSwitchCheckDefault"><b>Lieu de fin par défaut ? </b></label>
+            </div>
+       </div>
+       
+      </div>
+      <div class="d-flex justify-content-around my-4">
+            <a class="link-delete mr-5" value="" ><small class=""><i class="fas fa-trash-alt"></i> Supprimer le lieu</small></a> 
+            <button type="button" id="postlocationBM" class="btn-explore-yellow-small"><small> Valider <i class="fas fa-chevron-right"></i></small></button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    let button = document.getElementById('printButton');
+    button.addEventListener('click' , function(){
+            var image = document.getElementById('qrImage');
+            var win = window.open('', '', 'height=700,width=700');
+            win.document.write(image.outerHTML);
+            win.document.close();
+            win.print();
+
+    })
+</script>
+<script src="public/js/clientLocations.js"></script>
+{% endblock %}

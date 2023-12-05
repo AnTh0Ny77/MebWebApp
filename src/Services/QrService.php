@@ -17,10 +17,10 @@ public function __construct(){
     $this->Client =  new Client(['base_uri' => $this->Config->AuthService->url ,'curl' => array(CURLOPT_SSL_VERIFYPEER => false)]);
 }
 
-public function getQr( $user , $game__id){
+public function getQr( $user , $game__id , $time){
 
     try {
-        $user = $this->Client->post('/api/qr/create', ['headers' => $this->AuthService->makeHeadersUser($user) , 'json' => ['game' => $game__id]]);
+        $user = $this->Client->post('/api/qr/create', ['headers' => $this->AuthService->makeHeadersUser($user) , 'json' => ['game' => $game__id , 'time' => intval($time) ]]);
     } catch(ClientException $exeption) {$user = $exeption->getResponse();}
 
     return $user;

@@ -9,6 +9,8 @@ use Src\Services\AuthService;
 use Src\Entities\User;
 use Src\Services\UserService;
 use Src\Services\QrService;
+use DateTimeZone;
+use DateTime;
 
 class QrController extends BaseController{
 
@@ -21,12 +23,28 @@ class QrController extends BaseController{
         self::init();
         $alert = false;
         $qr = false ;
-
+        $time = 48;
         $user = $userServices->autoRefresh($_SESSION['user']);
 
-        if (!empty($_POST['game']) && !empty($_POST['time'])) {
+        if (!empty($_POST['game']) && !empty($_POST['date'])) {
+            $parisTimezone = new DateTimeZone('Europe/Paris');
+            $parisTime = new DateTime('now', $parisTimezone);
+            $parisTime->setTime($parisTime->format('H'), 0, 0); // Round down to the nearest hour
+            $date = DateTime::createFromFormat('Y-m-d\TH:i', $_POST['date'], $parisTimezone);
+            if ($date->format('i') >= 30) {
+                $date->modify('+1 hour')->setTime($date->format('H'), 0, 0); // Round up to the next hour
+            } else {
+                $date->setTime($date->format('H'), 0, 0); // Round down to the nearest hour
+            }
+            $diff = $parisTime->diff($date);
+            $hours = $diff->h + ($diff->days * 24);
+            if ($diff->i >= 30) {
+                $hours++; // Round up to the next hour
+            }
+            $time = $hours;
+           
            $qrService = new QrService();
-           $qr = $qrService->getQr($user , $_POST['game']);
+           $qr = $qrService->getQr($user , $_POST['game'] , $time);
              
 
         if (intval($qr->getStatusCode()) != 200){
@@ -93,4 +111,8 @@ class QrController extends BaseController{
         );
     }
 
+    function diffToParisTimezone(DateTime $date): int {
+
+        
+    }
 }
