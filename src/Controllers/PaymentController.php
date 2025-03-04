@@ -20,6 +20,8 @@ class PaymentController extends BaseController{
 
     public static function index()
     {
+
+        
         $userServices = new UserService();
         self::init();
         $alert = false;
@@ -32,11 +34,27 @@ class PaymentController extends BaseController{
             die();
         }
 
+        
         \Stripe\Stripe::setApiKey('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');
-        $paymentIntent = \Stripe\PaymentIntent::create([
-            'amount' => intval($_POST['amount']),
-            'currency' => 'eur'
-        ]);
+       
+        
+        try {
+        
+            $paymentIntent = \Stripe\PaymentIntent::create([
+                'amount' => intval($_POST['amount']),
+                'currency' => 'eur'
+            ]);
+        
+            echo json_encode(['status' => 'success', 'paymentIntent' => $paymentIntent]);
+        } catch (\Stripe\Exception\ApiErrorException $e) {
+            echo json_encode(['error' => 'Erreur Stripe : ' . $e->getMessage()]);
+            die();
+        } catch (Exception $e) {
+            echo json_encode(['error' => 'Erreur : ' . $e->getMessage()]);
+            die();
+        }
+
+       
 
         if (empty($paymentIntent->client_secret)) {
             header('location: amount');

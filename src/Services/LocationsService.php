@@ -20,7 +20,7 @@ class LocationsService {
     public function getLocations($user){
        
         try {
-             $response = $this->Client->get('/api/clientLocation?order[booleanColumn]=desc&order[id]=asc',
+             $response = $this->Client->get('/api/clientLocation?user='.$user->getId().'&order[booleanColumn]=desc&order[id]=asc',
              [ ]);
              
         } catch(ClientException $exeption) { $response = $exeption->getResponse();}

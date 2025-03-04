@@ -90,6 +90,31 @@ class UserService {
         return $response;
     }
 
+    public function deleteUser( $body){
+
+      
+        try {
+            $user = $this->Client->post('/api/user/delete/final', [
+            'json' => $body]);
+        } catch(ClientException $exeption) {$user = $exeption->getResponse();}
+       
+      
+        $response = json_decode($user->getBody()->read(32768));
+     
+        return $response;
+    }
+
+
+     public function recoveryPassword($body){
+        try {
+            $user = $this->Client->post('/api/user/reset/password', [
+            'json' => $body]);
+        } catch(ClientException $exeption) {$user = $exeption->getResponse();}
+       
+        $response = json_decode($user->getBody()->read(32768));
+        return $response;
+    }
+
     public function putClient($user , $body){
         $authService = new AuthService();
         if (!$user instanceof User)

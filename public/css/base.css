@@ -9,6 +9,17 @@ text-align: center;
 color: #3F3F3F;
 }
 
+.h2-delete {
+
+    font-family: 'Mirza';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 21px;
+    text-align: center;
+    color: #3F3F3F;
+}
+
 .info-myeb{
 font-family: 'Roboto';
 font-style: normal;
@@ -122,6 +133,15 @@ td{
     font-size: 16px;
     line-height: 20px;
     color: #FABC43;
+}
+
+.yellow-link{
+    color: #F7A633;
+    
+}
+
+.yellow-link:hover {
+    color: #F7A633;
 }
 
 .rank-img{
@@ -409,6 +429,20 @@ td{
     cursor: pointer;
     background: #074A36;
     border-radius: 5px;
+    text-decoration: none;
+}
+
+.button-delete {
+    width: auto;
+    height: 33px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: #F2F2F2;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    background: #DF1214;
+    border-radius: 15px;
     text-decoration: none;
 }
 
@@ -842,6 +876,29 @@ td{
     left: 0 !important;
     right: 0 !important;
     text-align: center !important;
+}
+
+.wrapper-alert-delete{
+    display: flex;
+    flex-direction: column;
+    justify-content:center ;
+    align-items: center;
+}
+
+.alert-myeb-delete{
+    background-color: #E3EBDD;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #1D871D;
+    color: #1D871D;
+    border-radius: 12px;
+    padding-top: 15px;
+    width: 350px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
 }
 @media (max-width: 1100px){
     

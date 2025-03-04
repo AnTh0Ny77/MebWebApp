@@ -9,6 +9,8 @@ use Src\Controllers\StatController as stat;
 use Src\Controllers\PasswordChangeController as pass;
 use Src\Controllers\UserController as user;
 use Src\Controllers\UserFormsController as forms;
+use Src\Controllers\DeleteUserController as delete;
+use Src\Controllers\PasswordRecoveryController as reco;
 
 session_start();
 $request = $_SERVER['REQUEST_URI'];
@@ -37,7 +39,7 @@ switch ($globalRequest){
         break;
 
     case '/qr':
-        echo qr::index();
+        echo qr2::index();
         break;
 
      case '/qr2'.$getData:
@@ -46,6 +48,10 @@ switch ($globalRequest){
 
     case '/exc'.$getData:
         echo pay::index();
+        break;
+
+    case '/suppression-donnees'.$getData:
+        echo delete::index();
         break;
 
     case '/amount':
@@ -70,6 +76,10 @@ switch ($globalRequest){
 
     case '/formsUser'.$getData:
         echo forms::index();
+        break;
+
+    case '/passwordRecovery'.$getData:
+        echo reco::index();
         break;
     
     default:

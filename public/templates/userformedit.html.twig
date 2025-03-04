@@ -9,11 +9,11 @@
     
 {% include "elements/sidebar.html.twig" %}
 {% if alert %}
-<div class="alert-center alert alert-warning alert-dismissible fade show" role="alert">
-    {{alert}}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </button>
-</div>
+    <div class="alert-center alert alert-warning alert-dismissible fade show" role="alert">
+        {{alert}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </button>
+    </div>
 {% endif %}
 <main class=" flex-wrap  d-flex wrapper-home justify-content-between">
     <div class="explorecard-xl">
@@ -39,8 +39,8 @@
                             <div class="subtitle-explorecard">Type de compte</div>
                             <select  value="{{client.clientInfiniteQr}}" name="type" id="type" class="input-myeb-small">
                                 
-                                <option value="1" >Qr payants</option>
-                                <option value="2">Qr ilimités</option>
+                                <option value="0" >Qr payants</option>
+                                <option value="1">Qr ilimités</option>
                             </select>
                         </div>
                         
@@ -121,23 +121,24 @@
             }
           }
 
-
           let validateLocationInput = function () {
             const locationInput = $("#location").val();
             const locationValue = locationInput.trim();
-            // Vérifier si la valeur ne contient que des nombres, des points et des virgules
-            if (!/^\d+([.,]\d+)+$/.test(locationValue)) {
-              return false; // ou une erreur, ou un message d'erreur
+
+            // Vérifier si la valeur contient des coordonnées GPS (nombres avec éventuellement un signe négatif, des points et des virgules)
+            if (!/^[-]?\d+([.,]\d+)?,[-]?\d+([.,]\d+)?$/.test(locationValue)) {
+                return false; // ou une erreur, ou un message d'erreur
             }
+
             // Diviser la valeur en deux parties, avant et après la virgule
             const parts = locationValue.split(",");
             const lat = parseFloat(parts[0]);
-            const lng = parseFloat(parts[1]); // remplacer tous les points par des virgules
-            
+            const lng = parseFloat(parts[1]);
+
             // Construire l'objet JSON avec les coordonnées
             const coordinates = { lat, lng };
             return JSON.stringify(coordinates);
-          }
+            }
 
           let validateUsernameInput = function () {
             const usernameInput = document.getElementById("username");

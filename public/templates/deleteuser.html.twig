@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block style %}
+<link rel="stylesheet" href="public/css/sidebar.css">
+
+{% endblock %}
+{% block main %}
+
+
+<main class=" login-container  d-flex align-items-center justify-content-center form-signin w-100 m-auto  text-center">
+    <form method="POST" action="suppression-donnees">
+        {% if alert %}
+            <div class="deleteSide">
+
+            </div>
+            <div class="wrapper-alert-delete ">
+                <div class="alert-myeb-delete my-3" role="alert">
+                    <p class=" font-weight-bold"><i class="fas fa-check"></i> {{alert}}</p>
+                </div>
+                <p class=" font-weight-bold">On va pas vous cacher qu’on est triste de vous voir partir :(</p>
+            </div>
+            
+        {% else %}
+            <div class="deleteSide">
+
+            </div>
+            <h2 class="h2-delete bold">Supprimer vos données</h2>
+            <div class="subtitle-explorecard mb-2"> Rentrez votre mail ci-dessous pour effacer vos données</div>
+        
+            <div class="form-floating my-4 ">
+                    
+                    <input type="text" class="input-myeb mx-auto" name="email" value="" placeholder="Votre adresse Mail" required>
+                    <input  type="hidden" name="token" value="{{token}}">
+            </div>
+            <button class=" button-delete mx-auto" type="submit">Je supprime définitivement mes données</button>
+        {% endif %}
+    </form>
+</main>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

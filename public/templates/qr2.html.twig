@@ -43,8 +43,8 @@
                 </div> 
             </div>
               <div class="left-invisible-explorecard">
-                <div class="title-explorecard"> Sélectionner ou ajouter un lieu de fin</div>
-                <div class="subtitle-explorecard">Sélectionez un jeu</div>
+                <div class="title-explorecard"> Lieu de fin</div>
+                <div class="subtitle-explorecard">Sélectionez un lieu de fin de jeu</div>
                
                 <div class="mt-20">
                     <div class="wrapper-list-myeb accordion accordion-flush" id="accordionFlushExample">
@@ -103,7 +103,7 @@
             </div>
             <div class="left-invisible-explorecard">
                 {% if user.clientInfiniteQr == 0  %}
-                    <div class="title-explorecard">Coût en EXC</div>
+                    <div class="title-explorecard">Coût en Explore Coin</div>
                     <div class="subtitle-explorecard">
                         {% for row in user.getClientGames() %}
                             {{row.Game.name ~  ": "}}<b>{{  row.cost ~ "EXC "}}</b><br>

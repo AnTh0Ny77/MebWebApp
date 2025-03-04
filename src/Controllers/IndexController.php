@@ -17,7 +17,7 @@ Class IndexController extends BaseController
 
         if (!empty($_POST['username']) && !empty($_POST['password'])) 
             $user =  $Security->login($_POST['username'] , $_POST['password'] );
-        
+
         if (!empty($user ) and !$user instanceof User) 
             $alert = [ "message" => 'identifiants invalides' , 'username' =>  $_POST['username'] , 'password' =>   $_POST['password']];
 

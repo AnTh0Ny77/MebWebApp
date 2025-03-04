@@ -20,13 +20,21 @@
                 <div class="subtitle-explorecard mb-2">Nom d' utilisateur</div>
                 <input type="text" class="input-myeb" name="username" value="{{alert['username']}}" placeholder="">
         </div>
-        <div class="form-floating my-4">
+        <div class="form-floating mt-4 mb-1">
             <div class="subtitle-explorecard mb-2">Mot de passe</div>
             <input type="password" class="input-myeb" value="{{alert['password']}}" name="password"  placeholder="">
+           
+              
         </div>
-
-        <button class=" button-login mx-auto" type="submit">se connecter</button>
+        <div class="d-flex flex-column">
+        <a href="passwordRecovery" class="yellow-link" >Mot de passe oublié ? </a>
+         <button class=" button-login mx-auto mt-2" type="submit">Se connecter</button>
+      
+        </div>
+          
+        
     </form>
+   
 </main>
 {% endblock %}
 {% block script %}

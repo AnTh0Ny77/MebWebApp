@@ -62,6 +62,15 @@
     background-size: 100% 100%;
 }
 
+.deleteSide {
+    margin: 8% auto;
+    width: 96px;
+    height: 102px;
+    background-image: url('../images/delete.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
 .qr-link{
 
     margin: 7% auto 1%;
